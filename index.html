@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plexus Memory Reel</title>
+<meta name="description" content="Plexus: United By Nerves. The club's story, its people and its memories, made for our seniors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Caveat:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* Layout: a college notice board. Real prints pinned and taped on a lab-grey wall,
+   notebook-paper letters, one cobalt ink for everything that matters. */
+:root{
+  color-scheme:light;
+  --wall:#E7E9E4;        /* lab wall grey, the page ground */
+  --card:#FFFFFF;        /* photo prints, cards */
+  --ink:#16171B;         /* text, rules */
+  --muted:#5B5F66;       /* secondary text */
+  --cobalt:#2141D8;      /* the one accent: MRCE-blue marker ink */
+  --tape:#F6D54A;        /* masking-tape yellow, used sparingly */
+  --lanyard:#D8392B;     /* red lanyard, only for tiny marks */
+  --rule:#16171B22;
+  --print:#FFFFFF;       /* photo print paper */
+  --print-ink:#16171B;   /* handwriting on the prints */
+  --print-muted:#5B5F66;
+  --on-accent:#FFFFFF;   /* text on the accent colour */
+  --thread:33,65,216;    /* nerve threads, as r,g,b */
+  --signal:#2141D8;      /* the dot that travels along a thread */
+  --pin:radial-gradient(circle at 35% 30%,#8FA3FF 0 18%,#2141D8 45%,#0E1F7A 100%);
+  --photo-filter:none;
+  --h1:var(--cobalt);
+  --display:"IBM Plex Sans Condensed","Arial Narrow","Roboto Condensed",Arial,sans-serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --hand:Caveat,"Segoe Script","Bradley Hand",cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px;overflow-x:hidden}
+body{background:var(--wall);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img,video{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
+h1,h2,h3{text-wrap:balance}
+
+.mono{font-family:var(--mono);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- top bar ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 28px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:var(--wall);border-bottom:1.5px solid var(--ink)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;letter-spacing:.04em;font-size:18px}
+.mark{width:30px;height:30px;border-radius:3px;background:var(--cobalt);display:flex;align-items:center;justify-content:center;color:var(--on-accent);font-family:var(--display);font-weight:700;font-size:18px;overflow:hidden;flex:none}
+.mark img{width:100%;height:100%;object-fit:cover}
+nav ul{display:flex;gap:26px;list-style:none;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+nav ul a{color:var(--muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav ul a:hover,nav ul a.on{color:var(--ink);border-color:var(--cobalt)}
+#progress{position:fixed;right:18px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:80;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink);pointer-events:none;background:var(--card);border:1.5px solid var(--ink);border-radius:3px;padding:3px 9px;font-variant-numeric:tabular-nums}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-block;padding:13px 22px;border:1.5px solid var(--ink);border-radius:3px;background:var(--card);font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s,background .2s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.gold{background:var(--cobalt);border-color:var(--ink);color:var(--on-accent)}
+
+/* ---------- 1 opening: the notice board ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;background:var(--wall)}
+.board{position:absolute;top:84px;right:2%;bottom:40px;width:54%}
+.board canvas,.wallwrap>canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pp{position:absolute;margin:0;background:var(--print);padding:7px 7px 24px;box-shadow:0 8px 18px #16171B2e;transform:rotate(var(--r,0deg));z-index:1;opacity:0;animation:pinIn .6s cubic-bezier(.2,.8,.3,1.2) forwards;animation-delay:var(--d,0s)}
+.pp img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--wall);filter:var(--photo-filter)}
+.pp figcaption{position:absolute;left:9px;right:9px;bottom:2px;color:var(--print-ink);font-family:var(--hand);font-weight:700;font-size:16px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes pinIn{from{opacity:0;transform:translateY(-18px) rotate(calc(var(--r,0deg) * 3))}to{opacity:1;transform:rotate(var(--r,0deg))}}
+/* push pins: the nodes of the plexus */
+.pp:after,.cell:after{content:"";position:absolute;z-index:4;top:-8px;left:50%;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:var(--pin);box-shadow:0 3px 4px #16171B55}
+.hero-in{position:relative;z-index:5;padding:120px 48px 96px;max-width:620px}
+.hero .mark{display:none}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);display:inline-block;background:var(--card);border:1.5px solid var(--ink);padding:3px 9px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(72px,10vw,150px);letter-spacing:-.02em;line-height:.82;margin:18px 0 6px;color:var(--h1);text-transform:uppercase}
+.tag{font-family:var(--hand);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.1;color:var(--ink);display:inline-block;background:var(--tape);padding:2px 16px 4px;transform:rotate(-2deg);margin-left:6px}
+.hero .cta{margin-top:40px;display:flex;gap:16px;flex-wrap:wrap}
+.scroll-cue{position:absolute;right:48px;bottom:28px;z-index:6;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);writing-mode:vertical-rl;text-transform:uppercase}
+
+/* ---------- shared section bits ---------- */
+section{position:relative;padding:110px 48px}
+.wrap{max-width:1140px;margin:0 auto}
+.shead{display:flex;gap:20px;align-items:baseline;margin-bottom:48px;padding-bottom:16px;border-bottom:1.5px solid var(--ink)}
+.shead .num{font-family:var(--mono);font-size:14px;color:var(--cobalt);font-weight:500}
+.shead h2{font-family:var(--display);font-weight:700;font-size:clamp(40px,6.4vw,76px);letter-spacing:-.01em;line-height:.95;text-transform:uppercase;flex:1;min-width:0}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);white-space:nowrap;text-transform:uppercase}
+.lead{color:var(--muted);font-size:19px;max-width:560px;margin:0 0 40px}
+.fade{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+.fade.in{opacity:1;transform:none}
+
+/* ---------- 2 story ---------- */
+#story{background:var(--card);border-bottom:1.5px solid var(--ink)}
+.story-text{max-width:640px;font-size:20px;line-height:1.6;color:var(--ink)}
+.clubs{display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin:56px 0 0;border:1.5px solid var(--ink)}
+.club{grid-column:span 2;padding:24px 22px 26px;border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);transition:background .2s}
+.club:hover{background:rgba(var(--thread),.06)}
+.club:nth-child(3){border-right:0}
+.club:first-child{grid-column:span 3}
+.club:nth-child(2){grid-column:span 3;border-right:0}
+.club:nth-child(3){grid-column:span 2;border-right:1.5px solid var(--ink)}
+.club:nth-child(4){grid-column:span 2}
+.club:nth-child(5){grid-column:span 2;border-right:0}
+.club:nth-child(n+3){border-bottom:0}
+.club h3{font-family:var(--display);font-weight:700;font-size:26px;text-transform:uppercase;letter-spacing:.01em;color:var(--cobalt);margin-bottom:6px}
+.club p{font-size:15px;color:var(--muted);line-height:1.5}
+.stats{display:flex;gap:0;margin-top:56px;flex-wrap:wrap}
+.stats>div{flex:1;min-width:150px;padding:18px 0 0;border-top:1.5px solid var(--ink)}
+.stats>div+div{padding-left:22px}
+.stats b{display:block;font-family:var(--display);font-weight:700;font-size:72px;line-height:1;font-variant-numeric:tabular-nums}
+.stats small{display:block;margin-top:6px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+@media (max-width:760px){.clubs{grid-template-columns:1fr}.club,.club:first-child,.club:nth-child(2),.club:nth-child(3),.club:nth-child(4),.club:nth-child(5){grid-column:1;border-right:0;border-bottom:1.5px solid var(--ink)}.club:last-child{border-bottom:0}.stats>div+div{padding-left:0}.stats{gap:0 22px}}
+
+/* ---------- 3 timeline ---------- */
+.tl{position:relative;max-width:1000px;margin:0 auto;padding-left:56px}
+.tl:before{content:"";position:absolute;left:14px;top:8px;bottom:0;width:2px;background:var(--cobalt);opacity:.35}
+.tl:after{content:"";position:absolute;left:10px;top:0;width:10px;height:10px;border-radius:50%;background:var(--cobalt);box-shadow:0 0 0 4px #2141D82e,0 0 14px 2px #2141D899;animation:signal 5s linear infinite}
+@keyframes signal{from{top:0;opacity:0}8%{opacity:1}92%{opacity:1}to{top:calc(100% - 10px);opacity:0}}
+.ch{position:relative;display:flex;gap:48px;align-items:flex-start;padding:22px 0 54px}
+.ch:nth-child(even){flex-direction:row-reverse}
+.ch:before{content:"";position:absolute;left:-49px;top:30px;width:16px;height:16px;border-radius:2px;background:var(--cobalt);border:3px solid var(--wall);box-shadow:0 0 0 1.5px var(--cobalt)}
+.ch-text{flex:1;min-width:0}
+.ch .lab{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--cobalt);text-transform:uppercase}
+.ch .role{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;margin-top:4px}
+.ch h3{font-family:var(--display);font-weight:700;font-size:clamp(34px,5vw,56px);line-height:1;text-transform:uppercase;margin:8px 0 10px}
+.ch .line{font-family:var(--hand);font-size:28px;line-height:1.2;color:var(--ink);max-width:520px}
+.ch ul{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:4px;width:100%;min-width:0}
+.ch li{width:100%;min-width:0}
+.ch li button{display:block;width:100%;max-width:100%;background:none;border:0;cursor:pointer;color:var(--ink);font-size:15px;padding:5px 0;border-bottom:1px solid var(--rule);text-align:left;white-space:normal;overflow-wrap:break-word;transition:color .2s,border-color .2s}
+.ch li button:before{content:"\2192\00a0\00a0";color:var(--cobalt)}
+.ch li button:hover{color:var(--cobalt);border-color:var(--cobalt)}
+.ch-photo{position:relative;flex:0 0 320px;aspect-ratio:4/3;max-width:100%;background-color:var(--print);background-size:cover;background-position:center;border:8px solid var(--print);border-bottom-width:30px;box-shadow:0 8px 18px #16171B26;transform:rotate(1.5deg)}
+.ch:nth-child(even) .ch-photo{transform:rotate(-1.5deg)}
+.ch-photo:after{content:"";position:absolute;top:-14px;left:50%;width:84px;height:24px;margin-left:-42px;background:var(--tape);opacity:.85;transform:rotate(-3deg)}
+.ch.now h3{color:var(--cobalt)}
+
+/* ---------- 4 memory wall ---------- */
+#reel{background:var(--wall)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:34px}
+.search{flex:0 1 260px;min-width:0;background:var(--card);border:1.5px solid var(--ink);border-radius:3px;padding:10px 14px;font-family:var(--sans);font-size:15px;color:var(--ink);outline:none}
+.search::placeholder{color:var(--muted)}
+.search:focus{border-color:var(--cobalt);box-shadow:0 0 0 2px #2141D833}
+.chip{padding:8px 12px;border:1.5px solid var(--ink);border-radius:3px;background:var(--card);font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--ink);cursor:pointer;transition:background .15s,color .15s}
+.chip:hover{background:#2141D814}
+.chip.on{background:var(--ink);color:var(--card)}
+.wallwrap{position:relative}
+.sheet{position:static;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));grid-auto-rows:170px;grid-auto-flow:dense;gap:26px 22px;padding:10px 4px}
+.cell{position:relative;z-index:1;background:var(--print);padding:8px 8px 32px;cursor:pointer;box-shadow:0 5px 14px #16171B24;transition:transform .25s,box-shadow .25s;transform:rotate(var(--r,0deg))}
+.cell:nth-child(4n+1){--r:-1.2deg}.cell:nth-child(4n+2){--r:.8deg}.cell:nth-child(4n+3){--r:-.4deg}.cell:nth-child(4n){--r:1.4deg}
+.cell.tall{grid-row:span 2}.cell.wide{grid-column:span 2}
+.cell .pic{width:100%;height:100%;background:var(--wall) center/cover no-repeat;object-fit:cover;display:block;filter:var(--photo-filter);transition:filter .3s}
+.cell:hover .pic,.cell:focus-visible .pic{filter:none}
+.cell:hover,.cell:focus-visible{transform:rotate(0) translateY(-4px) scale(1.02);box-shadow:0 14px 26px #16171B33;z-index:2}
+.cell .over{display:none}
+.cell .cap{position:absolute;left:10px;right:10px;bottom:5px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;white-space:nowrap;overflow:hidden}
+.cell .cap span:first-child{font-family:var(--hand);font-weight:700;font-size:18px;line-height:1.1;color:var(--print-ink);overflow:hidden;text-overflow:ellipsis}
+.cell .cap span:last-child{font-family:var(--mono);font-size:11px;color:var(--print-muted)}
+.cell .play{position:absolute;left:50%;top:calc(50% - 12px);width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:var(--cobalt);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-size:20px;padding-left:4px;box-shadow:0 4px 12px #0005;pointer-events:none}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);font-family:var(--hand);font-size:28px;padding:40px 0}
+
+/* ---------- lightbox ---------- */
+#lb{position:fixed;inset:0;z-index:100;background:#16171Bf2;display:none;align-items:center;justify-content:center;padding:24px}
+#lb.on{display:flex}
+.lb-box{width:min(94vw,1040px);max-height:94vh;display:flex;flex-direction:column;gap:14px;background:var(--card);padding:12px 12px 18px;box-shadow:0 20px 50px #0008}
+.lb-media{width:100%;aspect-ratio:16/9;max-height:70vh;background:#000;background-size:contain;background-repeat:no-repeat;background-position:center;display:flex}
+.lb-media video,.lb-media img{width:100%;height:100%;object-fit:contain;background:#000}
+.lb-meta{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline;padding:0 6px}
+.lb-meta .yr{font-family:var(--mono);color:var(--cobalt);font-size:13px}
+.lb-meta h4{font-family:var(--hand);font-weight:700;font-size:32px;line-height:1.1;color:var(--ink)}
+.lb-cap{color:var(--muted);font-size:15px;padding:0 6px}
+.lb-people{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;padding:0 6px}
+.lb-x,.lb-nav{position:absolute;background:none;border:0;color:#fff;cursor:pointer;font-size:40px;line-height:1;padding:10px;opacity:.85}
+.lb-x:hover,.lb-nav:hover{opacity:1;color:var(--tape)}
+.lb-x{top:14px;right:20px}.lb-nav.prev{left:10px;top:50%}.lb-nav.next{right:10px;top:50%}
+
+/* ---------- 5 letters: notebook pages ---------- */
+#letters{background:var(--card);border-top:1.5px solid var(--ink)}
+.desk{display:grid;grid-template-columns:repeat(6,1fr);gap:40px 30px;align-items:start;padding:10px 0}
+.paper{grid-column:span 2}
+.paper:nth-child(3n+1){grid-column:span 3}
+.paper:nth-child(3n+2){grid-column:span 3}
+@media (max-width:900px){.desk{grid-template-columns:1fr}.paper,.paper:nth-child(3n+1),.paper:nth-child(3n+2){grid-column:1}}
+.paper{position:relative;background-color:#FDFDFB;background-image:linear-gradient(90deg,transparent 46px,#D8392B55 46px,#D8392B55 48px,transparent 48px),repeating-linear-gradient(transparent 0 31px,#2141D82b 31px 32px);color:var(--print-ink);padding:30px 26px 24px 64px;box-shadow:0 8px 20px #16171B26;border:1px solid var(--rule);transform:rotate(var(--r,0deg));transition:transform .4s}
+.paper.fade{transition:opacity .8s ease,transform .4s ease}
+.paper.fade.in{transform:rotate(var(--r,0deg))}
+.paper.fade.in:hover,.paper.fade.in.open{transform:rotate(0) translateY(-4px)}
+.paper .from{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--print-muted);text-transform:uppercase}
+.paper .who{display:flex;gap:12px;align-items:center;margin:10px 0 2px}
+.paper .av{width:48px;height:48px;border-radius:50%;background-size:cover;background-position:center;border:2px solid var(--card);box-shadow:0 0 0 1.5px var(--ink);flex:none}
+.paper h3{font-family:var(--display);font-weight:700;font-size:26px;text-transform:uppercase;line-height:1}
+.paper .rl{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--cobalt);text-transform:uppercase}
+.paper p{font-family:var(--hand);font-weight:500;font-size:24px;line-height:32px;margin:14px 0 10px;color:#1D2A6B;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
+.paper.open p{-webkit-line-clamp:unset;display:block}
+.paper .more{background:none;border:0;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--cobalt);text-transform:uppercase;margin-bottom:8px;text-decoration:underline;text-underline-offset:3px}
+.paper .sig{font-family:var(--hand);font-weight:700;font-size:38px;line-height:1;color:var(--cobalt)}
+.paper .yr{position:absolute;right:20px;top:26px;font-family:var(--mono);font-size:11px;color:var(--print-muted)}
+
+/* ---------- 6 credits ---------- */
+#credits{padding:0;height:100vh;min-height:640px;overflow:hidden;background:var(--ink);color:#fff}
+.cbg{position:absolute;inset:0;background-size:cover;background-position:center}
+.cshade{position:absolute;inset:0;background:linear-gradient(#16171Bcc,#16171Bb3 40%,#16171Bee)}
+.roll{position:absolute;inset:0 0 120px 0;overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 14%,#000 82%,transparent)}
+.roll-in{position:absolute;top:100%;left:0;right:0;text-align:center;padding:0 24px;animation:none}
+.roll-in.go{animation:roll var(--dur,60s) linear forwards}
+@keyframes roll{to{transform:translateY(calc(-1 * var(--dist,2000px)))}}
+.cg{margin-bottom:54px}
+.cg .mono{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--tape)}
+.cg .n{font-family:var(--display);font-weight:600;font-size:clamp(28px,4.4vw,44px);line-height:1.2;text-transform:uppercase;margin-top:6px}
+.close{position:absolute;left:24px;right:24px;bottom:62px;text-align:center;font-family:var(--hand);font-weight:700;font-size:clamp(28px,4vw,42px);color:#fff;opacity:0;transition:opacity 2s}
+.close.show{opacity:1}
+.replay{position:absolute;left:0;right:0;bottom:18px;text-align:center;z-index:3}
+.replay .btn{padding:8px 16px;font-size:11px;box-shadow:2px 2px 0 var(--tape)}
+
+/* ---------- footer ---------- */
+footer{text-align:center;padding:44px 24px calc(60px + env(safe-area-inset-bottom,0px));background:var(--wall);border-top:1.5px solid var(--ink);color:var(--muted)}
+footer .links{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+footer .links a{color:var(--cobalt);border-bottom:1.5px solid transparent}footer .links a:hover{border-color:var(--cobalt)}
+
+/* ---------- phones ---------- */
+@media (max-width:760px){
+  nav{padding:8px 16px;padding-top:calc(8px + env(safe-area-inset-top,0px));flex-wrap:wrap}
+  nav ul{gap:16px;font-size:11px;overflow-x:auto;width:100%;padding-bottom:2px}
+  .brand span.t{display:none}
+  section{padding:76px 18px}
+  .hero{flex-direction:column;align-items:stretch;justify-content:flex-start;min-height:0}
+  .board{position:relative;top:auto;right:auto;bottom:auto;width:100%;height:auto;aspect-ratio:1/0.74;margin-top:calc(96px + env(safe-area-inset-top,0px))}
+  .pp{padding:5px 5px 18px}.pp figcaption{font-size:13px}.pp:nth-child(n+8){display:none}
+  .hero-in{padding:10px 18px 64px!important}
+  .shead{flex-wrap:wrap;gap:6px 14px}
+  .tl{padding-left:40px}.tl:before{left:6px}.tl:after{left:2px}.ch:before{left:-42px}
+  .ch,.ch:nth-child(even){flex-direction:column;gap:22px}.ch-photo{flex:none;width:100%}
+  .sheet{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:140px;gap:18px 14px}
+  .cell{padding:6px 6px 28px}.cell .cap span:first-child{font-size:17px}
+  .cell.wide{grid-column:span 2}
+  .stats b{font-size:56px}
+  #progress{right:10px;font-size:10px;padding:2px 7px}
+  .scroll-cue{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .pp{animation:none;opacity:1}.tl:after{animation:none;display:none}.fade{opacity:1;transform:none;transition:none}
+  #credits{height:auto;padding:100px 24px 120px}.roll{position:relative;inset:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .roll-in{position:static;transform:none!important;animation:none!important}.close{position:static;opacity:1;margin-top:20px}.replay{display:none}
+}
+
+/* =====================================================================
+   THEME B: BLUEPRINT. The technical club's world: an engineering drawing sheet,
+   drafting-cyan lines, stencil-style mono lettering, pins become drawing nodes.
+   ===================================================================== */
+:root[data-look="blueprint"]{
+  color-scheme:dark;
+  --wall:#0E2A5E; --card:#123371; --ink:#EAF2FF; --muted:#A4B8DE; --cobalt:#6CD3FF; --tape:#FFD84A;
+  --rule:#EAF2FF26; --print:#F4F8FF; --print-ink:#0E2A5E; --print-muted:#4A6394; --on-accent:#0B2250;
+  --thread:108,211,255; --signal:#FFD84A; --h1:#FFFFFF;
+  --pin:radial-gradient(circle,#0E2A5E 0 30%,#6CD3FF 34% 58%,#0E2A5E 62% 70%,#6CD3FF 74%);
+  --photo-filter:saturate(.85) contrast(1.05);
+  --display:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+[data-look="blueprint"] body,[data-look="blueprint"] .hero,[data-look="blueprint"] #reel{background-color:var(--wall);background-image:linear-gradient(#FFFFFF10 1px,transparent 1px),linear-gradient(90deg,#FFFFFF10 1px,transparent 1px),linear-gradient(#FFFFFF08 1px,transparent 1px),linear-gradient(90deg,#FFFFFF08 1px,transparent 1px);background-size:120px 120px,120px 120px,24px 24px,24px 24px}
+[data-look="blueprint"] nav{background:#0B2250;border-color:#6CD3FF55}
+[data-look="blueprint"] #story,[data-look="blueprint"] #letters{background:#0B2250}
+[data-look="blueprint"] .hero h1{font-weight:500;letter-spacing:-.04em;font-size:clamp(64px,9vw,136px)}
+[data-look="blueprint"] .hero h1:after{content:"DWG NO. PLX-2026 \00B7  SHEET 1 OF 6";display:block;font-size:12px;letter-spacing:.12em;color:var(--muted);margin-top:14px;font-weight:400}
+[data-look="blueprint"] .shead h2{font-weight:500;letter-spacing:-.03em}
+[data-look="blueprint"] .club h3,[data-look="blueprint"] .ch h3,[data-look="blueprint"] .stats b{font-weight:500;letter-spacing:-.03em}
+[data-look="blueprint"] .tag{background:none;border:1.5px dashed var(--tape);color:var(--tape);transform:none}
+[data-look="blueprint"] .btn{border-radius:0;box-shadow:none;border-color:var(--cobalt);background:transparent;color:var(--ink)}
+[data-look="blueprint"] .btn.gold{background:var(--cobalt);color:var(--on-accent)}
+[data-look="blueprint"] .btn:hover{box-shadow:0 0 0 3px #6CD3FF40}
+[data-look="blueprint"] .eyebrow,[data-look="blueprint"] #progress,[data-look="blueprint"] .chip,[data-look="blueprint"] .search{background:#0B2250;border-color:#6CD3FF80;color:var(--ink)}
+[data-look="blueprint"] .chip.on{background:var(--cobalt);color:var(--on-accent)}
+[data-look="blueprint"] .clubs,[data-look="blueprint"] .club,[data-look="blueprint"] .shead,[data-look="blueprint"] .stats>div,[data-look="blueprint"] footer{border-color:#6CD3FF66!important}
+[data-look="blueprint"] .pp,[data-look="blueprint"] .cell,[data-look="blueprint"] .ch-photo{transform:none;box-shadow:0 0 0 1px #6CD3FF,6px 6px 0 #06173A}
+[data-look="blueprint"] .cell:hover{transform:translateY(-4px)}
+[data-look="blueprint"] .pp{animation-name:fadeIn}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+[data-look="blueprint"] .ch-photo:after{display:none}
+[data-look="blueprint"] .tl:before{opacity:.7;background:repeating-linear-gradient(var(--cobalt) 0 8px,transparent 8px 14px)}
+[data-look="blueprint"] .ch:before{border-radius:50%;background:var(--wall);border:2px solid var(--cobalt);box-shadow:none}
+[data-look="blueprint"] .paper{transform:none;box-shadow:6px 6px 0 #06173A}
+[data-look="blueprint"] footer{background:#0B2250}
+
+/* =====================================================================
+   THEME C: FEST POSTER. A risograph-printed college fest poster:
+   two inks (fluorescent pink + riso blue) on plain paper, photos printed as
+   duotones that come back to full colour when you touch them.
+   ===================================================================== */
+:root[data-look="poster"]{
+  --wall:#F7F6F2; --card:#FFFFFF; --ink:#1B3C8C; --muted:#5A6A95; --cobalt:#FF3EA5; --tape:#FF3EA5;
+  --rule:#1B3C8C2e; --print:#FFFFFF; --print-ink:#1B3C8C; --print-muted:#5A6A95; --on-accent:#FFFFFF;
+  --thread:255,62,165; --signal:#1B3C8C; --h1:#FF3EA5;
+  --pin:radial-gradient(circle at 40% 35%,#FF9ACF 0 20%,#FF3EA5 50%,#C0126F 100%);
+  --photo-filter:grayscale(1) contrast(1.2) brightness(1.05);
+  --display:"Archivo Black","Arial Black",Impact,sans-serif;
+}
+[data-look="poster"] body{background-color:var(--wall);background-image:radial-gradient(#1B3C8C14 1px,transparent 1.2px);background-size:6px 6px}
+[data-look="poster"] .hero,[data-look="poster"] #reel{background:transparent}
+[data-look="poster"] nav{background:var(--wall);border-color:var(--ink)}
+[data-look="poster"] .mark{border-radius:50%;background:var(--cobalt)}
+[data-look="poster"] .hero h1{font-weight:400;letter-spacing:-.03em;line-height:.86;text-shadow:5px 4px 0 #1B3C8C;mix-blend-mode:multiply}
+[data-look="poster"] .shead h2{font-weight:400;letter-spacing:-.02em;color:var(--ink);text-shadow:3px 2px 0 #FF3EA599}
+[data-look="poster"] .club h3,[data-look="poster"] .ch h3,[data-look="poster"] .stats b{font-weight:400;letter-spacing:-.02em}
+[data-look="poster"] .club h3{color:var(--cobalt)}
+[data-look="poster"] .tag{background:var(--ink);color:#fff;transform:rotate(2deg)}
+[data-look="poster"] .btn{border-radius:40px;box-shadow:4px 4px 0 var(--cobalt);border-color:var(--ink)}
+[data-look="poster"] .btn.gold{background:var(--ink);color:#fff}
+[data-look="poster"] .chip,[data-look="poster"] .search,[data-look="poster"] .eyebrow{border-radius:40px}
+[data-look="poster"] .chip.on{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+[data-look="poster"] #story,[data-look="poster"] #letters{background:#FFF0F7}
+[data-look="poster"] .pp,[data-look="poster"] .cell,[data-look="poster"] .ch-photo{background-color:#FFD9EC;box-shadow:none;border-color:#FFD9EC}
+[data-look="poster"] .pp img,[data-look="poster"] .cell .pic{mix-blend-mode:multiply}
+[data-look="poster"] .pp,[data-look="poster"] .cell{box-shadow:5px 5px 0 #1B3C8C}
+[data-look="poster"] .ch-photo{border-color:#FFD9EC;box-shadow:6px 6px 0 #1B3C8C;filter:grayscale(1) contrast(1.2)}
+[data-look="poster"] .ch-photo:after{background:var(--ink);opacity:1}
+[data-look="poster"] .tl:before{background:var(--cobalt);opacity:.8;width:3px}
+[data-look="poster"] .ch:before{border-radius:50%;background:var(--cobalt);box-shadow:0 0 0 1.5px var(--cobalt)}
+[data-look="poster"] .paper{background-color:#FFFFFF}
+[data-look="poster"] .cg .mono{color:#FF8FC8}
+
+/* ---------- theme picker (for the team to compare; remove once chosen) ---------- */
+.looks{position:fixed;left:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;gap:4px;align-items:center;padding:5px;background:var(--card);border:1.5px solid var(--ink);border-radius:6px;box-shadow:0 6px 18px #0003;font-family:var(--mono);font-size:11px}
+.looks span{padding:0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.looks button{border:1.5px solid transparent;background:none;border-radius:4px;padding:5px 9px;cursor:pointer;color:var(--ink);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.looks button[aria-pressed="true"]{background:var(--cobalt);color:var(--on-accent)}
+@media (max-width:760px){.looks span{display:none}.looks button{padding:5px 7px;font-size:10px}#progress{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="#top" aria-label="Plexus, back to top"><span class="mark" id="navMark">P</span><span class="t">PLEXUS</span></a>
+  <ul id="navLinks">
+    <li><a href="#story" data-s="story">Story</a></li>
+    <li><a href="#timeline" data-s="timeline">Timeline</a></li>
+    <li><a href="#reel" data-s="reel">Memories</a></li>
+    <li><a href="#letters" data-s="letters">Letters</a></li>
+    <li><a href="#credits" data-s="credits">Credits</a></li>
+  </ul>
+</nav>
+<div id="progress">01 / 06</div>
+<div class="looks" role="group" aria-label="Choose a theme"><span>Theme</span>
+  <button type="button" data-look="pinboard" aria-pressed="true">A &middot; Pinboard</button>
+  <button type="button" data-look="blueprint" aria-pressed="false">B &middot; Blueprint</button>
+  <button type="button" data-look="poster" aria-pressed="false">C &middot; Fest poster</button>
+</div>
+
+<!-- 1. OPENING -->
+<header class="hero" id="top" data-scene>
+  <div class="board" id="board" aria-hidden="true"><canvas id="heroNerves"></canvas></div>
+  <div class="hero-in">
+    <div class="mark" id="heroMark">P</div>
+    <div class="eyebrow">MRCE &middot; For our seniors &middot; 2026</div>
+    <h1 id="brandName">PLEXUS</h1>
+    <div class="tag" id="tagline"></div>
+    <div class="cta">
+      <a class="btn gold" href="#reel">See the memories</a>
+      <a class="btn" href="#story">Read our story</a>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll down</div>
+</header>
+
+<!-- 2. STORY -->
+<section id="story" data-scene>
+  <div class="wrap">
+    <div class="shead fade"><span class="num">01</span><h2>What is Plexus</h2><span class="kicker">Our story</span></div>
+    <p class="story-text fade" id="intro"></p>
+    <div class="clubs fade" id="clubs"></div>
+    <div class="stats fade" id="stats"></div>
+  </div>
+</section>
+
+<!-- 3. TIMELINE -->
+<section id="timeline" data-scene>
+  <div class="wrap">
+    <div class="shead fade"><span class="num">02</span><h2>Founder to today</h2><span class="kicker">Every chapter</span></div>
+    <p class="lead fade">Every chapter had a leader and a story. Tap any event to see its memories.</p>
+    <div class="tl" id="chapters"></div>
+  </div>
+</section>
+
+<!-- 4. REEL -->
+<section id="reel" data-scene>
+  <div class="wrap">
+    <div class="shead fade"><span class="num">03</span><h2>Memory wall</h2><span class="kicker">Photos and videos</span></div>
+    <p class="lead fade">Every photo is a pin, and every thread is a nerve that ties us together. Hover a photo to see it light up, or search a name to find yours.</p>
+    <div class="tools fade">
+      <input class="search" id="q" type="search" placeholder="Find your memory..." aria-label="Search memories by name, event or year" autocomplete="off">
+      <span id="chips" style="display:contents"></span>
+    </div>
+    <div class="wallwrap" id="wallwrap"><canvas id="wallNerves" aria-hidden="true"></canvas><div class="sheet" id="sheet"></div></div>
+  </div>
+</section>
+
+<!-- 5. LETTERS -->
+<section id="letters" data-scene>
+  <div class="wrap">
+    <div class="shead fade"><span class="num">04</span><h2>Letters</h2><span class="kicker">From our seniors</span></div>
+    <p class="lead fade">Words from the people who built Plexus.</p>
+    <div class="desk" id="desk"></div>
+  </div>
+</section>
+
+<!-- 6. CREDITS -->
+<section id="credits" data-scene>
+  <div class="cbg" id="cbg"></div><div class="cshade"></div>
+  <div class="roll" id="roll"><div class="roll-in" id="rollIn"></div></div>
+  <div class="close" id="closing"></div>
+  <div class="replay"><button class="btn" id="replay" type="button">Replay credits</button></div>
+</section>
+
+<footer>
+  <div class="mono" style="font-size:11px;letter-spacing:.22em">PLEXUS &middot; UNITED BY NERVES</div>
+  <!-- Fix these links to match the real page names -->
+  <div class="links"><a href="index.html">Home</a><a href="events.html">Events</a><a href="magazines.html">Magazines</a></div>
+</footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Memory viewer">
+  <button class="lb-x" id="lbx" aria-label="Close">&times;</button>
+  <button class="lb-nav prev" id="lbp" aria-label="Previous">&#8249;</button>
+  <button class="lb-nav next" id="lbn" aria-label="Next">&#8250;</button>
+  <div class="lb-box" id="lbbox"></div>
+</div>
+
+<script>
+/* ==================================================================
+   EDIT THIS BLOCK ONLY. Replace the placeholders with real content.
+   - Photos and videos go in "img/" and "video/" folders, then use paths like "img/hackathon-01.jpg"
+   - Leave any src / photo as "" to show a placeholder color frame
+   - memory type: "photo"  = image
+                  "video"  = poster with a play button, opens in the viewer
+                  "clip"   = short muted looping clip that plays inside the wall (use 3 or fewer).
+                           Optional "loop" = a small 5-6s file for the wall; "src" then plays in full in the viewer
+   - memory shape: "" (normal), "tall" or "wide"
+   - an event's "album" must match a name in "albums" exactly
+   ================================================================== */
+const CONFIG = {
+  brand: "PLEXUS",
+  logo: "",                                   // e.g. "img/logo.png" (square). Empty shows a "P" mark
+  tagline: "United By Nerves",
+  intro: "Plexus is the branch club of MRCE where ideas become events and events become memories. Five sub-clubs, one family: learning, building, creating and celebrating together. This archive replays the journey, from the people who started it to the ones carrying it forward.",
+  subclubs: [
+    {name:"Technical",        desc:"Innovation, hackathons and technical projects."},
+    {name:"Non-Technical",    desc:"Event decor, logistics and everything that makes an event run."},
+    {name:"Sports & E-Sports",desc:"Athletic and gaming competitions."},
+    {name:"Social Media",     desc:"Digital content that tells the club's story."},
+    {name:"Design",           desc:"Visual branding, posters and promotional material."}
+  ],
+  stats: [
+    {n: 0, suffix: "+", label: "Events"},
+    {n: 0, suffix: "+", label: "Members"},
+    {n: 0, suffix: "",  label: "Years"}
+  ],
+  heroPhotos: [
+    "img/strip/20251024_114722.jpg",
+    "img/strip/IMG_6773.jpg",
+    "img/strip/IMG_1695.jpg",
+    "img/strip/20251024_114027.jpg",
+    "img/strip/IMG_6664.jpg",
+    "img/strip/IMG_6743.jpg",
+    "img/strip/20251024_114827.jpg",
+    "img/strip/IMG_1707.jpg",
+    "img/strip/IMG_6689.jpg",
+    "img/strip/20251024_114916.jpg",
+    "img/strip/IMG_6760.jpg",
+    "img/strip/20251024_1148290.jpg",
+    "img/strip/IMG_6819.jpg"
+  ],
+
+  // Chapters: founder first, current president last
+  eras: [
+    {years:"20XX",    role:"Founder",   name:"Founder Name",     line:"It started with an idea and a few friends.", photo:"video/20240920_121107.jpg",
+      events:[{title:"Seminar hall, 2024",album:"Stage Events"},{title:"Lab sessions",album:"Lab Sessions"}]},
+    {years:"20XX–XX", role:"President", name:"President Name",   line:"The year we learned to run events at scale.", photo:"img/IMG_1695.jpg",
+      events:[{title:"Lab session and team day, June 2025",album:"Lab Sessions"},{title:"Felicitation, August 2025",album:"Lab Sessions"}]},
+    {years:"20XX–XX", role:"President", name:"President Name",   line:"We made the club feel like a family.", photo:"img/20251024_114722.jpg",
+      events:[{title:"PLEXUS on stage, October 2025",album:"Stage Events"},{title:"Celebrations",album:"Celebrations"}]},
+    {years:"Present", role:"President", name:"Current President", line:"Now it is our turn to keep the story going.", photo:"img/IMG_6664.jpg", now:true,
+      events:[{title:"February 2026 celebration",album:"Celebrations"}]}
+  ],
+
+  albums: ["Stage Events","Lab Sessions","Celebrations"],
+
+  memories: [
+    {type:"photo", src:"img/20251024_114722.jpg", album:"Stage Events", year:"2025", caption:"The PLEXUS stage lineup", people:[], shape:"wide"},
+    {type:"video", src:"video/20240920_121107.mp4", poster:"video/20240920_121107.jpg", album:"Stage Events", year:"2024", caption:"Full house in the seminar hall", people:[], shape:"tall"},
+    {type:"photo", src:"img/IMG_6773.jpg", album:"Lab Sessions", year:"2025", caption:"Shoulder to shoulder", people:[], shape:""},
+    {type:"photo", src:"img/20251024_114827.jpg", album:"Stage Events", year:"2025", caption:"Unveiling the club T-shirt", people:[], shape:""},
+    {type:"clip", src:"video/IMG_1666.mp4", loop:"video/IMG_1666_loop.mp4", poster:"video/IMG_1666.jpg", album:"Lab Sessions", year:"2025", caption:"Lab session in progress", people:[], shape:"wide"},
+    {type:"photo", src:"img/IMG_6819.jpg", album:"Lab Sessions", year:"2025", caption:"Certificates and smiles", people:[], shape:"tall"},
+    {type:"photo", src:"img/IMG_1695.jpg", album:"Celebrations", year:"2025", caption:"Team photo with the club tee", people:[], shape:"wide"},
+    {type:"photo", src:"img/IMG_6664.jpg", album:"Celebrations", year:"2026", caption:"Through the balloon arch", people:[], shape:""},
+    {type:"photo", src:"img/20251024_114027.jpg", album:"Stage Events", year:"2025", caption:"On stage at MRCE", people:[], shape:""},
+    {type:"video", src:"video/IMG_1690.mp4", poster:"video/IMG_1690.jpg", album:"Lab Sessions", year:"2025", caption:"A talk in the lab", people:[], shape:""},
+    {type:"photo", src:"img/IMG_6760.jpg", album:"Lab Sessions", year:"2025", caption:"Recognition moment", people:[], shape:"tall"},
+    {type:"photo", src:"img/IMG_1707.jpg", album:"Celebrations", year:"2025", caption:"Cake with the team", people:[], shape:""},
+    {type:"photo", src:"img/20251024_114916.jpg", album:"Stage Events", year:"2025", caption:"Felicitation on stage", people:[], shape:"wide"},
+    {type:"photo", src:"img/IMG_6743.jpg", album:"Lab Sessions", year:"2025", caption:"Felicitation in the lab", people:[], shape:""},
+    {type:"video", src:"video/20251024_114752.mp4", poster:"video/20251024_114752.jpg", album:"Stage Events", year:"2025", caption:"Behind the stage", people:[], shape:"tall"},
+    {type:"photo", src:"img/IMG_6689.jpg", album:"Celebrations", year:"2026", caption:"The decorated lab", people:[], shape:""},
+    {type:"photo", src:"img/20251024_1148290.jpg", album:"Stage Events", year:"2025", caption:"T-shirt reveal, one more shot", people:[], shape:""}
+  ],
+
+  letters: [
+    {name:"Founder Name",   role:"Founder",   year:"20XX", photo:"", signature:"Founder Name",
+      text:"When we started Plexus we only had an idea and a few friends who believed in it. Seeing it grow into what it is today makes every late night worth it. To everyone carrying it forward: keep it warm, keep it curious, and keep it together."},
+    {name:"Past President", role:"President", year:"20XX", photo:"", signature:"Past President",
+      text:"Every event taught us something new. We made mistakes, we fixed them, and we laughed about them later. To the juniors: the club is only as strong as the people who show up, so keep showing up."},
+    {name:"Past President", role:"President", year:"20XX", photo:"", signature:"Past President",
+      text:"Plexus gave me friends, confidence and memories I will carry forever. Thank you for trusting us with your time and your ideas."}
+  ],
+
+  groupPhoto: "img/IMG_1695.jpg",                             // full-screen background for the credits, e.g. "img/group.jpg"
+  credits: [
+    {title:"Founders",         names:["Founder Name"]},
+    {title:"Past Presidents",  names:["President Name","President Name"]},
+    {title:"Committees",       names:["Member Name","Member Name","Member Name"]},
+    {title:"Photography",      names:["Contributor Name"]},
+    {title:"Seniors",          names:["Senior Name","Senior Name","Senior Name","Senior Name"]}
+  ],
+  closing: "The story continues with every new nerve we connect."
+};
+/* ================================================================== */
+
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tone = (i, l1=88, l2=80) => `linear-gradient(135deg,hsl(${(i*47+200)%360} 18% ${l1}%),hsl(${(i*47+230)%360} 18% ${l2}%))`;
+const bg = (src, i) => src ? `url('${esc(src)}')` : tone(i);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- brand, logo, opening ---------- */
+document.title = CONFIG.brand.charAt(0) + CONFIG.brand.slice(1).toLowerCase() + ' Memory Reel';
+$('#brandName').textContent = CONFIG.brand;
+$('#tagline').textContent = CONFIG.tagline;
+if (CONFIG.logo) ['#navMark','#heroMark'].forEach(s => { $(s).innerHTML = `<img src="${esc(CONFIG.logo)}" alt="">`; });
+else ['#navMark','#heroMark'].forEach(s => { $(s).textContent = (CONFIG.brand || 'P').charAt(0); });
+
+/* hero: pinned prints, positioned as % of the board (x, y, width, tilt) */
+const BOARD = [[2,4,33,-3],[40,0,29,2.5],[74,9,25,4],[8,39,27,2],[41,35,31,-2],[76,45,23,-4],[16,70,31,-1.5],[55,70,28,3]];
+(function board(){
+  const photos = CONFIG.heroPhotos, caps = CONFIG.memories.filter(m => m.type === 'photo');
+  if (!photos.length) return;
+  $('#board').insertAdjacentHTML('beforeend', BOARD.map(([x, y, w, r], i) => {
+    const src = photos[i % photos.length], name = src.split('/').pop();
+    const m = caps.find(c => c.src.split('/').pop() === name);
+    return `<figure class="pp" style="left:${x}%;top:${y}%;width:${w}%;--r:${r}deg;--d:${(.15 + i * .09).toFixed(2)}s">
+      <img src="${esc(src)}" alt="" decoding="async"><figcaption>${m ? esc(m.caption) : ''}</figcaption></figure>`;
+  }).join(''));
+})();
+
+/* ---------- nerves: threads between pins, with signals travelling along them ----------
+   One small canvas engine drives both the hero board and the memory wall.
+   Nodes = pin heads. Each pin links to its 2 nearest pins, the thread sags a little,
+   and "signals" run along random threads. Runs only while on screen; static if reduced motion. */
+function nerves(canvas, host, pickNodes, o = {}){
+  const ctx = canvas.getContext('2d');
+  let nodes = [], edges = [], pulses = [], w = 0, h = 0, raf = 0, on = false, grow = 0, hot = -1, last = 0;
+  const K = o.k || 2; let INK = '33,65,216', SIG = '#2141D8';
+  const colors = () => { const cs = getComputedStyle(document.documentElement); INK = cs.getPropertyValue('--thread').trim() || INK; SIG = cs.getPropertyValue('--signal').trim() || SIG; };
+  function measure(){
+    colors();
+    const r = host.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+    w = r.width; h = r.height; canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    nodes = pickNodes(r);
+    const seen = new Set(); edges = [];
+    nodes.forEach((a, i) => nodes.map((b, j) => [j, Math.hypot(a.x - b.x, a.y - b.y)]).filter(([j]) => j !== i)
+      .sort((p, q) => p[1] - q[1]).slice(0, K).forEach(([j, d]) => {
+        const key = i < j ? i + '-' + j : j + '-' + i;
+        if (!seen.has(key) && d < (o.max || 1e9)){ seen.add(key); edges.push({a: i, b: j, sag: Math.min(60, d * .16)}); }
+      }));
+    pulses = pulses.filter(p => p.e < edges.length);
+    draw();
+  }
+  const pt = (e, t) => { const A = nodes[e.a], B = nodes[e.b], cx = (A.x + B.x) / 2, cy = (A.y + B.y) / 2 + e.sag, u = 1 - t;
+    return [u*u*A.x + 2*u*t*cx + t*t*B.x, u*u*A.y + 2*u*t*cy + t*t*B.y]; };
+  function draw(){
+    ctx.clearRect(0, 0, w, h);
+    edges.forEach(e => {
+      const lit = hot >= 0 && (e.a === hot || e.b === hot);
+      ctx.strokeStyle = `rgba(${INK},${lit ? .95 : .38})`; ctx.lineWidth = lit ? 2.2 : 1.3;
+      ctx.beginPath(); const n = 24, end = Math.round(n * grow);
+      for (let s = 0; s <= end; s++){ const [x, y] = pt(e, s / n); s ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+      ctx.stroke();
+    });
+    pulses.forEach(p => { const e = edges[p.e]; if (!e) return; const [x, y] = pt(e, p.dir > 0 ? p.t : 1 - p.t);
+      ctx.fillStyle = `rgba(${INK},.22)`; ctx.beginPath(); ctx.arc(x, y, 7, 0, 7); ctx.fill();
+      ctx.fillStyle = SIG; ctx.beginPath(); ctx.arc(x, y, 3.2, 0, 7); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x - .8, y - .8, 1.1, 0, 7); ctx.fill(); });
+  }
+  function fire(from){ const list = edges.map((e, i) => [e, i]).filter(([e]) => from == null || e.a === from || e.b === from);
+    if (!list.length) return; const [e, i] = list[Math.random() * list.length | 0];
+    pulses.push({e: i, t: 0, v: .5 + Math.random() * .5, dir: from == null ? (Math.random() < .5 ? 1 : -1) : (e.a === from ? 1 : -1)}); }
+  function tick(t){
+    const dt = Math.min(.05, (t - (last || t)) / 1000); last = t;
+    grow = Math.min(1, grow + dt * 0.9);
+    if (grow >= 1 && pulses.length < (o.max_pulses || 4) && Math.random() < dt * (o.rate || 1.4)) fire(hot >= 0 ? hot : null);
+    pulses.forEach(p => p.t += dt * p.v); pulses = pulses.filter(p => p.t < 1);
+    draw(); if (on) raf = requestAnimationFrame(tick);
+  }
+  const start = () => { if (on || reduce) return; on = true; last = 0; raf = requestAnimationFrame(tick); };
+  const stop = () => { on = false; cancelAnimationFrame(raf); };
+  if (reduce) grow = 1;
+  new ResizeObserver(() => requestAnimationFrame(measure)).observe(host);
+  new IntersectionObserver(es => es[0].isIntersecting ? start() : stop()).observe(host);
+  return {
+    refresh(){ requestAnimationFrame(measure); },
+    focus(i){ hot = i; if (i >= 0 && !reduce) for (let k = 0; k < 3; k++) fire(i); draw(); }
+  };
+}
+
+/* hero network: pins sit at the top centre of each print */
+const heroNet = nerves($('#heroNerves'), $('#board'), r => $$('#board .pp').filter(el => el.offsetParent)
+  .map(el => ({x: el.offsetLeft + el.offsetWidth / 2, y: el.offsetTop})), {k: 2, rate: 1.8, max_pulses: 5});
+addEventListener('load', () => heroNet.refresh());
+
+/* ---------- story ---------- */
+$('#intro').textContent = CONFIG.intro;
+$('#clubs').innerHTML = CONFIG.subclubs.map(c => `<div class="club"><h3>${esc(c.name)}</h3><p>${esc(c.desc)}</p></div>`).join('');
+$('#stats').innerHTML = CONFIG.stats.map(s => `<div><b data-n="${+s.n||0}" data-suf="${esc(s.suffix)}">0${esc(s.suffix)}</b><small>${esc(s.label)}</small></div>`).join('');
+
+/* ---------- timeline ---------- */
+$('#chapters').innerHTML = CONFIG.eras.map((e, i) => `
+  <article class="ch fade ${e.now ? 'now' : ''}">
+    <div class="ch-text">
+      <div class="lab">${e.now ? 'CHAPTER ' + String(i+1).padStart(2,'0') + ' &mdash; PRESENT' : 'CHAPTER ' + String(i+1).padStart(2,'0') + ' &mdash; ' + esc(e.years)}</div>
+      <div class="role">${esc(e.role)}</div>
+      <h3>${esc(e.name)}</h3>
+      <p class="line">&ldquo;${esc(e.line)}&rdquo;</p>
+      <ul>${e.events.map(ev => `<li><button type="button" data-album="${esc(ev.album)}">${esc(ev.title)}</button></li>`).join('')}</ul>
+    </div>
+    <div class="ch-photo" style="background-image:${bg(e.photo, i+30)}"></div>
+  </article>`).join('');
+$('#chapters').addEventListener('click', e => {
+  const b = e.target.closest('button[data-album]'); if (!b) return;
+  state.album = b.dataset.album; state.q = ''; $('#q').value = '';
+  renderChips(); renderSheet(); $('#reel').scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
+});
+
+/* ---------- reel: search, filters, wall ---------- */
+const state = {album:'All', q:''};
+const years = [...new Set(CONFIG.memories.map(m => m.year).filter(Boolean))].sort();
+const chipList = ['All', ...CONFIG.albums, ...years, 'Videos'];
+function renderChips(){
+  $('#chips').innerHTML = chipList.map(c => `<button type="button" class="chip ${c === state.album ? 'on' : ''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+}
+function visible(){
+  const q = state.q.trim().toLowerCase();
+  return CONFIG.memories.map((m, i) => ({...m, i})).filter(m => {
+    const a = state.album;
+    const okA = a === 'All' || (a === 'Videos' ? m.type !== 'photo' : (m.album === a || m.year === a));
+    const hay = [m.caption, m.album, m.year, ...(m.people || [])].join(' ').toLowerCase();
+    return okA && (!q || hay.includes(q));
+  });
+}
+function renderSheet(){
+  const list = visible();
+  $('#sheet').innerHTML = list.length ? list.map(m => {
+    const poster = m.type === 'photo' ? m.src : m.poster;
+    const pic = (m.type === 'clip' && m.src)
+      ? `<video class="pic clip" muted loop playsinline preload="none" data-src="${esc(m.loop || m.src)}"${m.poster ? ` poster="${esc(m.poster)}"` : ''}></video>`
+      : poster ? `<img class="pic" src="${esc(poster)}" alt="" loading="lazy" decoding="async">`
+               : `<div class="pic" style="background-image:${tone(m.i+7)}"></div>`;
+    return `<div class="cell ${esc(m.shape || '')}" data-i="${m.i}" tabindex="0" role="button" aria-label="Open memory: ${esc(m.caption)}, ${esc(m.year)}">
+      ${pic}
+      ${m.type === 'video' ? '<div class="play">&#9654;</div>' : ''}
+      <div class="over">${esc(m.caption)}</div>
+      <div class="cap"><span>${esc(m.caption)}</span><span>${esc(m.year)}</span></div></div>`;
+  }).join('') : '<p class="empty">No memories match yet. Try another name, event or year.</p>';
+  $$('.clip').forEach(v => clipIO.observe(v));
+  if (window.wallNet) wallNet.refresh();
+}
+$('#chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; state.album = b.dataset.c; renderChips(); renderSheet(); });
+$('#q').addEventListener('input', e => { state.q = e.target.value; renderSheet(); });
+
+/* memory wall network: threads run behind the prints, between their pins */
+var wallNet = nerves($('#wallNerves'), $('#wallwrap'), () => $$('#sheet .cell')
+  .map(el => ({x: el.offsetLeft + el.offsetWidth / 2, y: el.offsetTop, el})), {k: 2, rate: 1.2, max_pulses: 6});
+const cellIndex = el => $$('#sheet .cell').indexOf(el);
+$('#sheet').addEventListener('pointerover', e => { const c = e.target.closest('.cell'); if (c) wallNet.focus(cellIndex(c)); });
+$('#sheet').addEventListener('pointerleave', () => wallNet.focus(-1));
+$('#sheet').addEventListener('focusin', e => { const c = e.target.closest('.cell'); if (c) wallNet.focus(cellIndex(c)); });
+
+/* clips play only while on screen, and load only then */
+const clipIO = new IntersectionObserver(es => es.forEach(en => {
+  const v = en.target;
+  if (en.isIntersecting){
+    if (!v.getAttribute('src')) v.src = v.dataset.src;
+    if (!reduce) v.play().catch(() => {});
+  } else v.pause();
+}), {threshold:.3});
+
+/* ---------- lightbox ---------- */
+const lb = $('#lb'), box = $('#lbbox');
+let shown = [], pos = -1;
+function openMem(i){
+  shown = visible().map(m => m.i); pos = shown.indexOf(i);
+  if (pos < 0){ shown = CONFIG.memories.map((_, k) => k); pos = i; }
+  drawMem(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; $('#lbx').focus();
+}
+function drawMem(){
+  const i = shown[pos], m = CONFIG.memories[i]; if (!m) return;
+  let media;
+  if (m.type !== 'photo' && m.src) media = `<video controls autoplay playsinline src="${esc(m.src)}"${m.poster ? ` poster="${esc(m.poster)}"` : ''}></video>`;
+  else if (m.type === 'photo' && m.src) media = `<img src="${esc(m.src)}" alt="${esc(m.caption)}">`;
+  else media = '';
+  const style = media ? '' : `style="background:${tone(i+7)}"`;
+  box.innerHTML = `<div class="lb-media" ${style}>${media}</div>
+    <div class="lb-meta"><span class="yr">${esc(m.year)} &middot; ${esc(m.album).toUpperCase()}</span><h4>${esc(m.caption)}</h4></div>
+    ${m.people && m.people.length ? `<div class="lb-people">In this memory: ${m.people.map(esc).join(', ')}</div>` : ''}`;
+  $('#lbp').style.display = $('#lbn').style.display = shown.length > 1 ? '' : 'none';
+}
+function step(d){ if (!lb.classList.contains('on')) return; pos = (pos + d + shown.length) % shown.length; drawMem(); }
+function closeMem(){ lb.classList.remove('on'); box.innerHTML = ''; document.body.style.overflow = ''; }
+$('#sheet').addEventListener('click', e => { const c = e.target.closest('.cell'); if (c) openMem(+c.dataset.i); });
+$('#sheet').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ const c = e.target.closest('.cell'); if (c){ e.preventDefault(); openMem(+c.dataset.i); } } });
+$('#lbx').addEventListener('click', closeMem);
+$('#lbp').addEventListener('click', () => step(-1));
+$('#lbn').addEventListener('click', () => step(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeMem(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('on')) return;
+  if (e.key === 'Escape') closeMem(); else if (e.key === 'ArrowLeft') step(-1); else if (e.key === 'ArrowRight') step(1);
+});
+
+/* ---------- letters ---------- */
+const tilt = [-1.6, 1.2, -0.8, 1.8, -1.2, 0.9];
+$('#desk').innerHTML = CONFIG.letters.map((l, i) => `
+  <article class="paper fade" style="--r:${tilt[i % tilt.length]}deg">
+    <div class="from">FROM THE ARCHIVE</div><div class="yr">${esc(l.year)}</div>
+    <div class="who">${l.photo ? `<div class="av" style="background-image:url('${esc(l.photo)}')"></div>` : ''}<div><h3>${esc(l.name)}</h3><div class="rl">${esc(l.role)}</div></div></div>
+    <p>${esc(l.text)}</p>
+    <button class="more" type="button">Read more</button>
+    <div class="sig">${esc(l.signature || l.name)}</div>
+  </article>`).join('');
+$('#desk').addEventListener('click', e => {
+  const b = e.target.closest('.more'); if (!b) return;
+  const card = b.closest('.paper'); card.classList.toggle('open');
+  b.textContent = card.classList.contains('open') ? 'Show less' : 'Read more';
+});
+
+/* ---------- credits ---------- */
+$('#cbg').style.backgroundImage = CONFIG.groupPhoto ? `url("${esc(CONFIG.groupPhoto)}")` : tone(5, 34, 16);
+$('#closing').textContent = CONFIG.closing;
+$('#rollIn').innerHTML = CONFIG.credits.map(g => `<div class="cg"><div class="mono">${esc(g.title)}</div>${g.names.map(n => `<div class="n">${esc(n)}</div>`).join('')}</div>`).join('') + '<div style="height:40px"></div>';
+const rollIn = $('#rollIn'), closing = $('#closing');
+let creditsPlayed = false;
+function playCredits(){
+  if (reduce){ closing.classList.add('show'); return; }
+  const h = $('#roll').clientHeight, dist = h + rollIn.scrollHeight;
+  rollIn.style.setProperty('--dist', dist + 'px');
+  rollIn.style.setProperty('--dur', Math.max(20, dist / 45) + 's');
+  closing.classList.remove('show');
+  rollIn.classList.remove('go'); void rollIn.offsetWidth; rollIn.classList.add('go');
+  clearTimeout(playCredits.t);
+  playCredits.t = setTimeout(() => closing.classList.add('show'), Math.max(20, dist / 45) * 1000 * .8);
+}
+$('#replay').addEventListener('click', playCredits);
+new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting && !creditsPlayed){ creditsPlayed = true; playCredits(); } }), {threshold:.45}).observe($('#credits'));
+
+/* ---------- scroll behaviors: reveal, counters, nav highlight, reel counter ---------- */
+const revealIO = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting){ en.target.classList.add('in'); revealIO.unobserve(en.target); } }), {threshold:.15, rootMargin:'0px 0px -6% 0px'});
+$$('.fade').forEach(el => revealIO.observe(el));
+
+const countIO = new IntersectionObserver(es => es.forEach(en => {
+  if (!en.isIntersecting) return;
+  const el = en.target, end = +el.dataset.n, suf = el.dataset.suf; let t0;
+  if (reduce){ el.textContent = end + suf; countIO.unobserve(el); return; }
+  const step = t => { t0 = t0 || t; const p = Math.min((t - t0) / 1500, 1); el.textContent = Math.round(end * p) + suf; if (p < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step); countIO.unobserve(el);
+}), {threshold:.6});
+$$('[data-n]').forEach(el => countIO.observe(el));
+
+const scenes = $$('[data-scene]'), links = $$('#navLinks a'), prog = $('#progress');
+const pad = n => String(n).padStart(2, '0');
+const sceneIO = new IntersectionObserver(es => es.forEach(en => {
+  if (!en.isIntersecting) return;
+  const idx = scenes.indexOf(en.target) + 1;
+  prog.textContent = `${pad(idx)} / ${pad(scenes.length)}`;
+  links.forEach(a => a.classList.toggle('on', a.dataset.s === en.target.id));
+}), {rootMargin:'-45% 0px -50% 0px'});
+scenes.forEach(s => sceneIO.observe(s));
+
+renderChips(); renderSheet();
+addEventListener('load', () => wallNet.refresh());
+
+/* ---------- theme picker: #pinboard, #blueprint or #poster in the link opens that theme ---------- */
+const LOOKS = ['pinboard', 'blueprint', 'poster'];
+function setLook(l){
+  if (!LOOKS.includes(l)) l = 'pinboard';
+  if (l === 'pinboard') document.documentElement.removeAttribute('data-look'); else document.documentElement.dataset.look = l;
+  $$('.looks button').forEach(b => b.setAttribute('aria-pressed', b.dataset.look === l));
+  try { localStorage.setItem('plexus-look', l); } catch (e) {}
+  heroNet.refresh(); wallNet.refresh();
+}
+$('.looks').addEventListener('click', e => { const b = e.target.closest('button[data-look]'); if (b) setLook(b.dataset.look); });
+let firstLook = location.hash.slice(1);
+if (!LOOKS.includes(firstLook)) { try { firstLook = localStorage.getItem('plexus-look'); } catch (e) {} }
+setLook(firstLook);
+</script>
+</body>
+</html>
