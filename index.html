@@ -6,6 +6,19 @@
 <title>Plexus Memory Reel</title>
 <meta name="description" content="Plexus: United By Nerves. A farewell reel for our seniors: the club's story, its people and its memories.">
 <meta name="theme-color" content="#050505">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Plexus">
+<meta property="og:title" content="Plexus Memory Reel">
+<meta property="og:description" content="United By Nerves. The story, the people and the memories of Plexus, MRCE.">
+<meta property="og:url" content="https://gurusaikoushil.github.io/plexus-flashback/">
+<meta property="og:image" content="https://gurusaikoushil.github.io/plexus-flashback/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gurusaikoushil.github.io/plexus-flashback/img/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Zilla+Slab:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -49,9 +62,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:
 .brand{display:flex;align-items:center;gap:12px;font-family:var(--slab);font-weight:700;letter-spacing:.2em;font-size:16px}
 .mark{width:40px;height:25px;flex:none;color:var(--ink)}
 .mark svg{width:100%;height:100%}
-nav ul{display:flex;gap:28px;list-style:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
-nav ul a{color:var(--muted);padding:4px 0;position:relative;transition:color .25s}
-nav ul a:after{content:"";position:absolute;left:50%;bottom:-6px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--ink);opacity:0;transition:opacity .25s}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
+nav ul a{display:block;color:var(--muted);padding:10px 0;position:relative;transition:color .25s}
+nav ul a:after{content:"";position:absolute;left:50%;bottom:2px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--ink);opacity:0;transition:opacity .25s}
 nav ul a:hover,nav ul a.on{color:var(--ink)}
 nav ul a.on:after{opacity:1;box-shadow:0 0 8px 2px #fff8}
 #progress{position:fixed;right:24px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:80;pointer-events:none;font-variant-numeric:tabular-nums}
@@ -145,10 +158,10 @@ section{position:relative;padding:120px 48px}
 .search{flex:0 1 280px;min-width:0;background:none;border:0;border-bottom:1px solid #ffffff55;padding:9px 2px;font-family:var(--sans);font-weight:300;font-size:16px;color:var(--ink);outline:none;transition:border-color .25s}
 .search::placeholder{color:var(--muted)}
 .search:focus{border-color:var(--ink)}
-.chip{position:relative;padding:8px 0;border:0;background:none;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .2s}
+.chip{position:relative;padding:12px 0;border:0;background:none;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .2s}
 .chip:hover{color:var(--ink)}
 .chip.on{color:var(--ink)}
-.chip.on:after{content:"";position:absolute;left:50%;bottom:-2px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px #fff9}
+.chip.on:after{content:"";position:absolute;left:50%;bottom:4px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px #fff9}
 .wallwrap{position:relative}
 .wallwrap>canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .sheet{position:static;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));grid-auto-rows:170px;grid-auto-flow:dense;gap:40px 30px;padding:14px 0}
@@ -179,9 +192,11 @@ section{position:relative;padding:120px 48px}
 .lb-meta h4{font-family:var(--slab);font-weight:600;font-size:28px;line-height:1.1;letter-spacing:.02em}
 .lb-cap{color:var(--soft);font-size:15px}
 .lb-people{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
-.lb-x,.lb-nav{position:absolute;background:none;border:0;color:#fff;cursor:pointer;font-size:38px;line-height:1;padding:10px;opacity:.7}
-.lb-x:hover,.lb-nav:hover{opacity:1}
-.lb-x{top:14px;right:20px}.lb-nav.prev{left:10px;top:50%}.lb-nav.next{right:10px;top:50%}
+.lb-x,.lb-nav{position:absolute;z-index:3;width:48px;height:48px;display:flex;align-items:center;justify-content:center;padding:0 0 4px;border-radius:50%;background:#000000b3;border:1px solid #ffffff33;color:#fff;cursor:pointer;font-size:30px;line-height:1;opacity:.85;transition:opacity .2s,background .2s}
+.lb-x:hover,.lb-nav:hover{opacity:1;background:#000}
+.lb-x{top:calc(14px + env(safe-area-inset-top,0px));right:16px}.lb-nav{top:50%;margin-top:-24px}.lb-nav.prev{left:14px}.lb-nav.next{right:14px}
+.lb-box{position:relative;z-index:1}
+@media (max-width:760px){#lb{padding:72px 12px calc(92px + env(safe-area-inset-bottom,0px))}.lb-media{max-height:62vh}.lb-meta h4{font-size:22px}.lb-nav{top:auto;margin-top:0;bottom:calc(22px + env(safe-area-inset-bottom,0px))}.lb-nav.prev{left:calc(50% - 64px)}.lb-nav.next{right:calc(50% - 64px)}}
 
 /* ---------- 5 letters: real letters on paper, sealed with the Plexus mark ---------- */
 .desk{display:flex;flex-direction:column;align-items:center;gap:80px;padding:20px 0}
@@ -224,7 +239,7 @@ section{position:relative;padding:120px 48px}
 .paper.short .body{max-height:none!important}
 .paper.short .body:after{display:none}
 .paper.short .more{display:none}
-.paper .more{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:6px 0;background:none;border:0;border-bottom:1px solid #2A241D66;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#2A241D}
+.paper .more{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:12px 0 8px;background:none;border:0;border-bottom:1px solid #2A241D66;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#2A241D}
 .paper .more:hover{border-color:#2A241D}
 .paper .closing{margin-top:22px}
 .paper .signoff{font-family:var(--slab);font-style:italic;font-size:17px;color:#2A241Dcc}
@@ -265,7 +280,7 @@ section{position:relative;padding:120px 48px}
 .close{position:absolute;left:24px;right:24px;bottom:62px;text-align:center;font-family:var(--slab);font-style:italic;font-size:clamp(20px,3vw,30px);color:var(--soft);opacity:0;transition:opacity 2s}
 .close.show{opacity:1}
 .replay{position:absolute;left:0;right:0;bottom:18px;text-align:center;z-index:3}
-.replay .btn{font-size:11px;padding:6px 2px}
+.replay .btn{font-size:11px;padding:12px 2px}
 
 /* ---------- footer ---------- */
 footer{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:60px 24px calc(60px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);color:var(--muted)}
@@ -275,10 +290,26 @@ footer .tagl{font-family:var(--slab);font-size:11px;letter-spacing:.5em}
 footer .links{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
 footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .links a:hover{color:var(--ink);border-color:var(--ink)}
 
+
+/* tablets and small laptops */
+@media (max-width:1000px){
+  .ch,.ch:nth-child(even){flex-direction:column;align-items:stretch;gap:40px}
+  .ch-photo{flex:none;width:min(calc(100% - 36px),560px);margin:18px}
+}
+@media (max-width:900px){
+  .clubs{grid-template-columns:1fr;gap:26px;padding:0 0 0 34px;margin-top:60px}
+  .clubs:before{left:6px;right:auto;top:0;bottom:0;width:1px;height:auto;background:linear-gradient(transparent,#ffffff66 6%,#ffffff66 94%,transparent)}
+  .club:before{left:-34px;top:6px}
+}
+/* phones held sideways and other short screens: keep the whole title on the first screen */
+
+.eyebrow{text-wrap:balance;max-width:34em}
+
 /* ---------- phones ---------- */
 @media (max-width:760px){
-  nav{padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top,0px));flex-wrap:wrap;background:linear-gradient(#050505 70%,#05050500)}
-  nav ul{gap:18px;font-size:10.5px;overflow-x:auto;width:100%;padding-bottom:6px}
+  nav{padding:8px 16px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));flex-wrap:wrap;background:linear-gradient(#050505 70%,#05050500)}
+  nav ul{gap:8px;font-size:11px;letter-spacing:.08em;width:100%;justify-content:space-between}
+  nav ul a{padding:12px 0 10px}
   .brand span.t{display:none}
   section{padding:84px 18px}
   .hero-in{padding:130px 18px 100px}
@@ -294,6 +325,16 @@ footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .li
   .cell{padding:13px 0 30px}.cell .cap span:first-child{font-size:12px}
   .cell.wide{grid-column:span 2}
   #progress{display:none}
+}
+@media (max-height:560px) and (orientation:landscape){
+  html .hero{min-height:100vh}
+  html .hero-in{padding:calc(var(--navh,70px) + 6px) 24px 30px}
+  html .hero-logo{width:104px}
+  html .hero h1{font-size:38px;margin-top:12px}
+  html .tag{font-size:12px;margin-top:6px}
+  html .eyebrow{margin-top:12px}
+  html .hero .cta{margin-top:14px;flex-direction:row;gap:24px}
+  html .scroll-cue{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .paper .body{transition:none}.paper.unfolding,.paper.folding{animation:none}
@@ -516,6 +557,10 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp
 const tone = (i, l1=88, l2=80) => `linear-gradient(135deg,hsl(${(i*47+200)%360} 18% ${l1}%),hsl(${(i*47+230)%360} 18% ${l2}%))`;
 const bg = (src, i) => src ? `url('${esc(src)}')` : tone(i);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const setNavH = () => document.documentElement.style.setProperty('--navh', document.querySelector('nav').offsetHeight + 'px');
+setNavH(); addEventListener('resize', setNavH);
+/* wall thumbnails live in img/wall/ (same file name, ~960px) */
+const wallSrc = src => /^img\/[^/]+\.jpg$/.test(src) ? src.replace(/^img\//, 'img/wall/') : src;
 
 /* ---------- brand, logo, opening ---------- */
 
@@ -654,7 +699,7 @@ function renderSheet(){
     const poster = m.type === 'photo' ? m.src : m.poster;
     const pic = (m.type === 'clip' && m.src)
       ? `<video class="pic clip" muted loop playsinline preload="none" data-src="${esc(m.loop || m.src)}"${m.poster ? ` poster="${esc(m.poster)}"` : ''}></video>`
-      : poster ? `<img class="pic" src="${esc(poster)}" alt="" loading="lazy" decoding="async">`
+      : poster ? `<img class="pic" src="${esc(wallSrc(poster))}" alt="" loading="lazy" decoding="async">`
                : `<div class="pic" style="background-image:${tone(m.i+7)}"></div>`;
     return `<div class="cell ${esc(m.shape || '')}" data-i="${m.i}" tabindex="0" role="button" aria-label="Open memory: ${esc(m.caption)}, ${esc(m.year)}">
       ${pic}
@@ -688,7 +733,9 @@ const clipIO = new IntersectionObserver(es => es.forEach(en => {
 /* ---------- lightbox ---------- */
 const lb = $('#lb'), box = $('#lbbox');
 let shown = [], pos = -1;
+let lastFocus = null;
 function openMem(i){
+  lastFocus = document.activeElement;
   shown = visible().map(m => m.i); pos = shown.indexOf(i);
   if (pos < 0){ shown = CONFIG.memories.map((_, k) => k); pos = i; }
   drawMem(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; $('#lbx').focus();
@@ -706,7 +753,11 @@ function drawMem(){
   $('#lbp').style.display = $('#lbn').style.display = shown.length > 1 ? '' : 'none';
 }
 function step(d){ if (!lb.classList.contains('on')) return; pos = (pos + d + shown.length) % shown.length; drawMem(); }
-function closeMem(){ lb.classList.remove('on'); box.innerHTML = ''; document.body.style.overflow = ''; }
+function closeMem(){ lb.classList.remove('on'); box.innerHTML = ''; document.body.style.overflow = ''; if (lastFocus && lastFocus.focus) lastFocus.focus({preventScroll:true}); }
+/* swipe left / right between memories on phones (not while scrubbing a video) */
+let tx = null, ty = 0;
+lb.addEventListener('touchstart', e => { if (e.target.closest('video')) { tx = null; return; } tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, {passive:true});
+lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; tx = null; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) step(dx < 0 ? 1 : -1); });
 $('#sheet').addEventListener('click', e => { const c = e.target.closest('.cell'); if (c) openMem(+c.dataset.i); });
 $('#sheet').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ const c = e.target.closest('.cell'); if (c){ e.preventDefault(); openMem(+c.dataset.i); } } });
 $('#lbx').addEventListener('click', closeMem);
