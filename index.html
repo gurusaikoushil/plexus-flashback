@@ -456,7 +456,7 @@ const CONFIG = {
 
   // Chapters: founder first, current president last
   eras: [
-    {years:"2023–24", role:"Founder · President", name:"Benhin", line:"", photo:"", silhouette:true, events:[]},
+    {years:"2023–24", role:"Founder · President", name:"Benhin", line:"", photo:"", nophoto:true, events:[]},
     {years:"2024–25", role:"Founder · President", name:"Harsha Aditya",
       line:"For us, Plexus was never just an organisation or a position. It was, and always will be, a family.",
       photo:"img/harsha.jpg", pos:"50% 37%", size:"210%",
@@ -504,7 +504,7 @@ const CONFIG = {
   credits: [
     {title:"Founders", names:["Harsha Aditya","Benhin"]},
     {title:"Presidents", names:["Benhin · 2023–24","Harsha Aditya · 2024–25","Parthiban · 2025–26","Arvind Singh · Present"]},
-    {title:"Members since 2023", grid:true, names:["Aishi Jain", "Dileep", "Jahnavi", "Taaha", "M Vaishnavi", "Druvika", "Swasthik", "Lochani", "Guna Ranjan", "G. Ramya", "Siddappa", "Ramya", "Prasheel Varma", "Deepika", "Akshitha", "Nikhil", "Deekshitha", "Sowmya", "Hema", "Khyathi", "Pallavi", "Chandrakala", "Subhash", "Anmol", "Harsh", "Purushottam", "Sruthi", "Nidhi", "Kevin", "Matthew", "Rakshitha", "Arjun", "Yaswanth", "Bharat Chandra", "Sumanth", "Vamshi", "Vamsi", "Chareeth Kumar", "Venkatesh", "Karthikeyan", "Shrish", "Nitish", "Chandu", "Tarun", "Laxmi Nandan Reddy", "Roshan", "Koushil", "Rayan", "Vyshnavi", "Hymavathi", "Sangeetha", "Manoj", "Dharani", "Aishwarya", "Nandini", "Rishika", "Virat", "Lahari", "Triveni", "Srinidhi", "Abhinav", "Venu", "Rashmitha", "Sriram", "Vignesh", "Anil", "Rohini", "Abhiram", "Bhuvan", "Aatulya", "Harsha", "Abhishek", "Sameeksha", "Shikhara", "Sneha", "Vaishnavi", "Sriya", "Triya", "Bharath", "Harshitha", "Rehan", "Vaishnavi Reddy", "Vaishnavi", "Shanthi", "B. Ashika", "G. Asritha", "Sai Charan", "Venkata Mani Charan", "Charan", "Kusuma", "Vaishnavi", "Nandini", "Sahasra", "Sohail", "Srinivas"]}
+    {title:"Members since 2023", grid:true, names:["Aishi Jain", "Dileep", "Jahnavi", "Taaha", "M Vaishnavi", "Druvika", "Swasthik", "Lochani", "Guna Ranjan", "G. Ramya", "Siddappa", "Juhitharamya", "Prasheel Varma", "Deepika", "Akshitha", "Nikhil", "Deekshitha", "Sowmya", "Hema", "Khyathi", "Pallavi", "Chandrakala", "Subhash", "Anmol", "Harsh", "Purushottam", "Sruthi", "Nidhi", "Kevin", "Matthew", "Rakshitha", "Arjun", "Yaswanth", "Bharat Chandra", "Sumanth", "Vamshi", "Vamsi", "Chareeth Kumar", "Venkatesh", "Karthikeyan", "Shrish", "Nitish", "Chandu", "Tarun", "Laxmi Nandan Reddy", "Roshan", "Koushil", "Rayan", "Vyshnavi", "Hymavathi", "Sangeetha", "Manoj", "Dharani", "Aishwarya", "Nandini", "Rishika", "Virat", "Lahari", "Triveni", "Srinidhi", "Abhinav", "Venu", "Rashmitha", "Sriram", "Vignesh", "Anil", "Rohini", "Abhiram", "Bhuvan", "Aatulya", "Harsha", "Abhishek", "Sameeksha", "Shikhara", "Sneha", "Vaishnavi", "Sriya", "Triya", "Bharath", "Harshitha", "Rehan", "Vaishnavi Reddy", "Vaishnavi", "Shanthi", "B. Ashika", "G. Asritha", "Sai Charan", "Venkata Mani Charan", "Charan", "Kusuma", "Vaishnavi", "Nandini", "Sahasra", "Sohail", "Srinivas"]}
   ],
   closing: "The story continues with every new nerve we connect."
 };
@@ -623,7 +623,7 @@ $('#chapters').innerHTML = CONFIG.eras.map((e, i) => `
       ${e.line ? `<p class="line">&ldquo;${esc(e.line)}&rdquo;</p>` : ''}
       ${e.events && e.events.length ? `<ul>${e.events.map(ev => `<li><button type="button" data-album="${esc(ev.album)}">${esc(ev.title)}</button></li>`).join('')}</ul>` : ''}
     </div>
-    ${e.photo ? `<div class="ch-photo" style="background-image:url('${esc(e.photo)}');background-position:${esc(e.pos || 'center')};background-size:${esc(e.size || 'cover')}"></div>`
+    ${e.nophoto ? '' : e.photo ? `<div class="ch-photo" style="background-image:url('${esc(e.photo)}');background-position:${esc(e.pos || 'center')};background-size:${esc(e.size || 'cover')}"></div>`
               : `<div class="ch-photo blank${e.silhouette ? ' person' : ''}">${e.silhouette ? PERSON : MARK}</div>`}
   </article>`).join('');
 $('#chapters').addEventListener('click', e => {
