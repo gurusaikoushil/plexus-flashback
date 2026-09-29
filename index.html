@@ -187,8 +187,7 @@ section{position:relative;padding:120px 48px}
 .desk{display:flex;flex-direction:column;align-items:center;gap:80px;padding:20px 0}
 .paper{--paper:#EEE7DA;--pink:#2A241D;--ink-blue:#1F2B4D;position:relative;width:min(100%,720px);padding:44px 56px 48px;color:var(--pink);
   background:
-    linear-gradient(180deg,transparent 33%,#0000000d 33.2%,#ffffff26 33.6%,transparent 34.2%,transparent 66.4%,#0000000d 66.6%,#ffffff26 67%,transparent 67.6%),
-    radial-gradient(ellipse at 20% 0%,#fffaf0 0,transparent 60%),
+        radial-gradient(ellipse at 20% 0%,#fffaf0 0,transparent 60%),
     radial-gradient(ellipse at 100% 100%,#d9cfbd 0,transparent 55%),
     var(--paper);
   box-shadow:0 30px 60px -20px #000,0 2px 0 #fff6 inset;transform:rotate(var(--r,0deg));transition:transform .5s ease}
@@ -207,8 +206,23 @@ section{position:relative;padding:120px 48px}
 .lh-date{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#2A241Dab;text-transform:uppercase}
 .paper .to{font-family:var(--hand);font-weight:600;font-size:30px;color:var(--ink-blue);margin:26px 0 12px}
 .paper .body p{font-family:var(--slab);font-weight:400;font-size:18.5px;line-height:1.72;margin:0 0 14px;color:#2A241D}
-.paper:not(.open) .body{max-height:15.5em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 62%,transparent);mask-image:linear-gradient(#000 62%,transparent)}
-.paper.short .body{max-height:none;-webkit-mask-image:none;mask-image:none}
+.paper .body{position:relative;overflow:hidden;max-height:15.5em;transition:max-height .9s cubic-bezier(.65,0,.25,1)}
+.paper .body:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5.5em;pointer-events:none;background:linear-gradient(#e9e2d400,#e6dfd0 85%);opacity:1;transition:opacity .6s ease}
+.paper.open .body:after{opacity:0}
+.paper .more{transition:border-color .25s}
+.paper .more .arr{display:inline-block;transition:transform .5s ease}
+.paper.open .more .arr{transform:rotate(180deg)}
+/* the sheet opens like folded paper: the lower panel swings out, creases flatten */
+.paper{transform-style:preserve-3d;perspective:1400px}
+.paper.unfolding{animation:unfold .9s cubic-bezier(.3,.7,.2,1)}
+.paper.folding{animation:refold .7s cubic-bezier(.5,0,.4,1)}
+@keyframes unfold{0%{transform:rotate(var(--r,0deg)) rotateX(14deg) scaleY(.96);box-shadow:0 12px 30px -12px #000}55%{transform:rotate(0) rotateX(-3deg) scaleY(1.01)}100%{transform:rotate(0) rotateX(0) scaleY(1)}}
+@keyframes refold{0%{transform:rotate(0) rotateX(0)}45%{transform:rotate(0) rotateX(10deg) scaleY(.97)}100%{transform:rotate(var(--r,0deg)) rotateX(0) scaleY(1)}}
+.paper .crease{position:absolute;left:0;right:0;height:14px;pointer-events:none;background:linear-gradient(#0000,#00000014 45%,#ffffff40 55%,#0000);transition:opacity .9s ease}
+.paper.open .crease{opacity:.35}
+.paper .crease.c1{top:33%}.paper .crease.c2{top:66%}
+.paper.short .body{max-height:none!important}
+.paper.short .body:after{display:none}
 .paper.short .more{display:none}
 .paper .more{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:6px 0;background:none;border:0;border-bottom:1px solid #2A241D66;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#2A241D}
 .paper .more:hover{border-color:#2A241D}
@@ -282,6 +296,7 @@ footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .li
   #progress{display:none}
 }
 @media (prefers-reduced-motion:reduce){
+  .paper .body{transition:none}.paper.unfolding,.paper.folding{animation:none}
   html{scroll-behavior:auto}
   .track{animation:none}.tl:after{display:none}.fade{opacity:1;transform:none;transition:none}
   .hero-logo path{animation:none;fill-opacity:1;stroke-opacity:0}
@@ -481,8 +496,8 @@ const CONFIG = {
       text:"As the founder of Plexus, I always believed that Plexus should be a place where anyone could come, express themselves and showcase their talent without any fear. Looking back, I’m really happy that we were able to make that happen. And seeing people now debate and fight for one position in Plexus honestly makes me smile — just like you guys fought with us when you were in your 3rd year 😂😂😂\n\nBut jokes apart, Plexus has shown us what a group of students can achieve with a little support from the management and, more importantly, the sleepless nights, hard work and sacrifices made by the students.\n\nWherever we go in life, Plexus has taught us to be responsible, diplomatic and empathetic towards others. It gave us memories, friendships and lessons that will stay with us far beyond college.\n\nFor us, Plexus was never just an organisation or a position. It was, and always will be, a family. ❤️"},
     {name:"N Parthiban", role:"President 2025–26 · 4C", year:"2025–26", to:"Dear Plexus,", photo:"img/parthiban_face.jpg", signoff:"", signature:"N Parthiban",
       text:"PLEXUS was never just a club I led; it became a chapter of my life I’ll carry long after college.\n\nAs President, I learned that leadership isn’t about the number of events you conduct, but the number of people you inspire to build what comes next.\n\nBetween ambitious ideas, impossible deadlines, and beautifully organised chaos, we built more than events—we built a culture.\n\nEvery mistake, late-night discussion, and small victory became part of PLEXUS’s story.\n\nTitles are temporary; what we leave behind isn’t.\n\nPLEXUS is a legacy built by many hands, and I’m proud to have added my chapter to it.\n\nMay the ideas grow bigger, the chaos stay legendary, and the legacy outlive every one of us.\n\nPlexus is not a place. Where Plexus people are, that’s where Plexus is."},
-    {name:"The seniors of Plexus", role:"To the President, 2026–27", year:"September 2026", to:"Dear Arvind,", photo:"", signoff:"With love and a little envy,", signature:"The Plexus family",
-      text:"The baton is yours now.\n\nPlexus started as an idea shared by a few friends in 2023. Three years later it is more than ten events, more than a hundred members, and more late nights than any of us can count. All of that now rests in your hands, and we couldn’t be happier about who is holding it.\n\nYou don’t have to run it the way we did. Keep what works, fix what didn’t, and always make room for the person standing at the edge of the room who hasn’t found their place yet. That is how Plexus grew in the first place.\n\nThere will be impossible deadlines and beautifully organised chaos. Lean on your team; every president before you did. When it gets heavy, remember that Plexus was never one person’s job. It was always all of us, and it still is.\n\nWe’ll be in the audience at every event, cheering the loudest."}
+    {name:"The seniors of Plexus", role:"2023 – 2026", year:"September 2026", to:"Hey Arvind,", photo:"", signoff:"", signature:"Your seniors",
+      text:"So it’s your turn now. Congrats, and also good luck, you’re going to need it 😄\n\nHonestly, none of us knew what we were doing when we started. We just kept showing up, figuring it out, fighting over small things and laughing about them later. Somehow Plexus came out of all that, and now it’s yours.\n\nA few things we learnt the hard way. Something will always go wrong an hour before the event. The mic, the projector, someone’s laptop. Don’t panic, your team will sort it out. They always do.\n\nDon’t try to do everything alone. We tried. It doesn’t work.\n\nLook out for the quiet ones. Some of them will end up running this club one day, so give them a chance before they feel they have to ask for one.\n\nAnd enjoy it. This year goes way faster than you think.\n\nProud of you. Make us prouder."}
   ],
 
   groupPhoto: "img/IMG_1695.jpg",                             // full-screen background for the credits, e.g. "img/group.jpg"
@@ -710,19 +725,33 @@ $('#desk').innerHTML = CONFIG.letters.map((l, i) => `
     <header class="lh"><span class="lh-mark">${MARK}</span><span><span class="lh-word">PLEXUS</span><br><span class="lh-tag">United by nerves</span></span><span class="lh-date">${esc(l.year)}</span></header>
     <div class="to">${esc(l.to || 'Dear Plexus,')}</div>
     <div class="body">${String(l.text).split(/\n\s*\n/).map(t => `<p>${esc(t)}</p>`).join('')}</div>
-    <button class="more" type="button">Unfold the letter &darr;</button>
+    <button class="more" type="button" aria-expanded="false"><span class="lbl">Unfold the letter</span> <span class="arr">&darr;</span></button>
     <div class="closing">
       ${l.signoff ? `<div class="signoff">${esc(l.signoff)}</div>` : ''}
       <div class="sig">${esc(l.signature || l.name)}</div>
       <div class="who">${l.photo ? `<div class="av" style="background-image:url('${esc(l.photo)}')"></div>` : ''}<div><h3>${esc(l.name)}</h3><div class="rl">${esc(l.role)}</div></div></div>
     </div>
-    <div class="seal" aria-hidden="true">${MARK}</div>
+    <div class="seal" aria-hidden="true">${MARK}</div><i class="crease c1"></i><i class="crease c2"></i>
   </article>`).join('');
 requestAnimationFrame(() => $$('#desk .paper').forEach(p => { const b = $('.body', p); if (b && b.scrollHeight <= b.clientHeight + 4) p.classList.add('short'); }));
 $('#desk').addEventListener('click', e => {
   const b = e.target.closest('.more'); if (!b) return;
-  const card = b.closest('.paper'); card.classList.toggle('open');
-  b.innerHTML = card.classList.contains('open') ? 'Fold it back &uarr;' : 'Unfold the letter &darr;';
+  const card = b.closest('.paper'), body = $('.body', card), opening = !card.classList.contains('open');
+  card.classList.remove('unfolding', 'folding'); void card.offsetWidth;
+  if (opening){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    card.classList.add('open', 'unfolding');
+    body.addEventListener('transitionend', () => { if (card.classList.contains('open')) body.style.maxHeight = 'none'; }, {once:true});
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px'; void body.offsetHeight;
+    body.style.maxHeight = '';
+    card.classList.remove('open'); card.classList.add('folding');
+    const top = card.getBoundingClientRect().top;
+    if (top < 0) window.scrollBy({top: top - 90, behavior: reduce ? 'auto' : 'smooth'});
+  }
+  b.setAttribute('aria-expanded', opening);
+  $('.lbl', b).textContent = opening ? 'Fold it back' : 'Unfold the letter';
+  card.addEventListener('animationend', () => card.classList.remove('unfolding', 'folding'), {once:true});
 });
 
 /* ---------- credits ---------- */
