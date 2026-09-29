@@ -323,8 +323,10 @@ footer .links a{color:var(--cobalt);border-bottom:1.5px solid transparent}footer
 .looks{position:fixed;left:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:95;display:flex;gap:4px;align-items:center;padding:5px;background:var(--card);border:1.5px solid var(--ink);border-radius:6px;box-shadow:0 6px 18px #0003;font-family:var(--mono);font-size:11px}
 .looks span{padding:0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
 .looks button{border:1.5px solid transparent;background:none;border-radius:4px;padding:5px 9px;cursor:pointer;color:var(--ink);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.looks-link{padding:5px 9px;border-radius:4px;color:var(--ink);text-transform:uppercase;letter-spacing:.03em}
+.looks-link:hover{background:rgba(var(--thread),.12)}
 .looks button[aria-pressed="true"]{background:var(--cobalt);color:var(--on-accent)}
-@media (max-width:760px){.looks span{display:none}.looks button{padding:5px 7px;font-size:10px}#progress{display:none}}
+@media (max-width:760px){.looks span{display:none}.looks button,.looks-link{padding:5px 7px;font-size:10px}#progress{display:none}}
 </style>
 </head>
 <body>
@@ -344,6 +346,7 @@ footer .links a{color:var(--cobalt);border-bottom:1.5px solid transparent}footer
   <button type="button" data-look="pinboard" aria-pressed="true">A &middot; Pinboard</button>
   <button type="button" data-look="blueprint" aria-pressed="false">B &middot; Blueprint</button>
   <button type="button" data-look="poster" aria-pressed="false">C &middot; Fest poster</button>
+  <a href="film-reel.html" class="looks-link">D &middot; Film reel</a>
 </div>
 
 <!-- 1. OPENING -->
