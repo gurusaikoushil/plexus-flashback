@@ -259,6 +259,8 @@ footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .li
 /* content additions */
 .ch-photo.blank{display:flex;align-items:center;justify-content:center;background:#0c0c0c;color:#ffffff30}
 .ch-photo.blank svg{width:46%}
+.ch-photo.person{background:#0c0c0c;align-items:flex-end}
+.ch-photo.person svg{width:100%;height:100%}
 .desk .paper:only-child{grid-column:1/-1;max-width:780px}
 .paper .body p{font-family:var(--slab);font-style:italic;font-weight:400;font-size:20px;line-height:1.6;margin:0 0 14px;color:var(--ink);display:block;-webkit-line-clamp:unset;overflow:visible}
 .paper .body p:before,.paper .body p:after{content:none}
@@ -355,8 +357,6 @@ footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .li
   <div class="foot-logo" id="footMark" aria-hidden="true"></div>
   <div class="word">PLEXUS</div>
   <div class="tagl">UNITED BY NERVES</div>
-  <!-- Fix these links to match the real page names on the main Plexus site -->
-  <div class="links"><a href="index.html">Home</a><a href="events.html">Events</a><a href="magazines.html">Magazines</a></div>
 </footer>
 
 <div id="lb" role="dialog" aria-modal="true" aria-label="Memory viewer">
@@ -415,12 +415,12 @@ const CONFIG = {
 
   // Chapters: founder first, current president last
   eras: [
-    {years:"2023–24", role:"Founder · President", name:"Benhin", line:"", photo:"", events:[]},
+    {years:"2023–24", role:"Founder · President", name:"Benhin", line:"", photo:"", silhouette:true, events:[]},
     {years:"2024–25", role:"Founder · President", name:"Harsha Aditya",
       line:"For us, Plexus was never just an organisation or a position. It was, and always will be, a family.",
-      photo:"img/IMG_1695.jpg",
+      photo:"img/harsha.jpg", pos:"50% 37%", size:"210%",
       events:[{title:"Full house in the seminar hall, September 2024",album:"Stage Events"},{title:"Lab session and team day, June 2025",album:"Lab Sessions"}]},
-    {years:"2025–26", role:"President", name:"Parthiban", line:"", photo:"img/20251024_114722.jpg",
+    {years:"2025–26", role:"President", name:"Parthiban", line:"", photo:"img/parthiban.jpg", pos:"45% 27%", size:"125%",
       events:[{title:"Felicitation in the lab, August 2025",album:"Lab Sessions"},{title:"PLEXUS on stage, October 2025",album:"Stage Events"},{title:"February 2026 celebration",album:"Celebrations"}]},
     {years:"Present", role:"President", name:"Arvind Singh", line:"", photo:"", now:true, events:[]}
   ],
@@ -451,7 +451,7 @@ const CONFIG = {
   ],
 
   letters: [
-    {name:"Harsha Aditya", role:"Founder · President 2024–25", year:"Since 2023", photo:"", signoff:"Your Ex-President & Founder", signature:"Harsha",
+    {name:"Harsha Aditya", role:"Founder · President 2024–25", year:"Since 2023", photo:"img/harsha_face.jpg", signoff:"Your Ex-President & Founder", signature:"Harsha",
       text:"As the founder of Plexus, I always believed that Plexus should be a place where anyone could come, express themselves and showcase their talent without any fear. Looking back, I’m really happy that we were able to make that happen. And seeing people now debate and fight for one position in Plexus honestly makes me smile — just like you guys fought with us when you were in your 3rd year 😂😂😂\n\nBut jokes apart, Plexus has shown us what a group of students can achieve with a little support from the management and, more importantly, the sleepless nights, hard work and sacrifices made by the students.\n\nWherever we go in life, Plexus has taught us to be responsible, diplomatic and empathetic towards others. It gave us memories, friendships and lessons that will stay with us far beyond college.\n\nFor us, Plexus was never just an organisation or a position. It was, and always will be, a family. ❤️"}
   ],
 
@@ -477,6 +477,9 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 $('#brandName').textContent = CONFIG.brand;
 $('#tagline').textContent = CONFIG.tagline;
 
+
+/* stand-in portrait: a figure seen from behind, for chapters still waiting on a photo */
+const PERSON = '<svg viewBox="0 0 400 300" aria-hidden="true"><defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a3a"/><stop offset="1" stop-color="#151515"/></linearGradient><radialGradient id="pl" cx=".5" cy=".35" r=".6"><stop offset="0" stop-color="#ffffff14"/><stop offset="1" stop-color="#ffffff00"/></radialGradient></defs><rect width="400" height="300" fill="url(#pl)"/><path d="M200 58c-27 0-46 20-46 47 0 20 9 37 22 45l-2 18c-40 8-78 26-94 52-9 15-12 43-12 80h264c0-37-3-65-12-80-16-26-54-44-94-52l-2-18c13-8 22-25 22-45 0-27-19-47-46-47z" fill="url(#pg)"/><path d="M156 96c4-26 22-40 44-40s40 14 44 40c-10-12-24-18-44-18s-34 6-44 18z" fill="#0d0d0d"/><path d="M200 58c-27 0-46 20-46 47" fill="none" stroke="#ffffff40" stroke-width="1.5"/><path d="M200 58c27 0 46 20 46 47" fill="none" stroke="#ffffff22" stroke-width="1.5"/></svg>';
 
 /* the Plexus mark, traced from the club logo */
 const MARK = '<svg class="logo" viewBox="0 0 966 604" aria-hidden="true"><path transform="translate(0,604) scale(0.1,-0.1)" d="M4828 5879 c-25 -35 -85 -120 -133 -189 -49 -69 -262 -384 -473 -700 -212 -316 -386 -576 -387 -578 -2 -2 -35 23 -73 55 -147 122 -318 205 -515 250 -398 90 -856 -108 -1115 -482 -23 -33 -88 -126 -144 -207 -222 -318 -511 -747 -645 -958 -58 -91 -137 -213 -175 -271 -38 -59 -155 -242 -261 -408 -191 -298 -313 -490 -529 -826 -291 -452 -291 -452 -249 -475 45 -23 1016 -7 1241 21 520 65 974 255 1238 519 67 67 92 104 311 450 198 313 300 473 556 870 122 190 245 381 272 425 28 44 95 148 149 232 54 84 171 264 259 400 342 529 692 1053 703 1053 8 0 150 -213 417 -624 66 -102 122 -185 125 -185 5 0 26 29 187 268 l103 153 -117 180 c-163 247 -405 627 -546 856 -65 106 -127 202 -136 213 l-18 22 -45 -64z m-1661 -1643 c112 -30 285 -151 354 -247 l20 -29 -87 -132 c-315 -478 -456 -695 -718 -1103 -325 -506 -369 -573 -425 -645 -235 -302 -531 -460 -976 -520 -94 -13 -375 -26 -375 -17 0 5 295 472 339 536 10 14 54 82 98 151 527 826 1110 1685 1223 1804 174 183 360 252 547 202z M6555 4733 c-202 -28 -430 -134 -598 -278 -73 -62 -100 -98 -242 -307 -88 -131 -180 -266 -204 -300 -88 -126 -260 -376 -353 -513 -52 -77 -124 -183 -161 -235 -37 -52 -86 -123 -109 -157 -49 -72 -55 -74 -83 -30 -45 71 -481 709 -503 737 -5 7 -31 -30 -170 -244 -145 -223 -144 -181 -10 -371 46 -66 129 -185 183 -265 54 -80 127 -186 162 -236 34 -51 63 -97 63 -103 0 -6 -66 -107 -148 -224 -159 -229 -238 -348 -468 -699 -247 -377 -315 -482 -479 -743 -87 -137 -162 -258 -168 -267 -16 -24 -11 -27 143 -96 475 -210 875 -295 1395 -295 545 -1 1086 132 1423 348 102 66 113 82 84 123 -31 43 -200 313 -390 622 -301 489 -660 1047 -775 1201 l-19 27 94 138 c376 550 630 914 639 914 4 0 47 -64 96 -142 49 -79 211 -336 360 -573 674 -1074 659 -1051 715 -1111 219 -238 670 -449 1120 -523 220 -37 316 -42 835 -48 467 -5 514 -4 538 11 14 9 25 23 25 32 0 8 -78 142 -173 297 -96 155 -225 365 -287 467 -183 299 -215 350 -428 690 -494 789 -572 911 -827 1295 -278 420 -331 491 -426 574 -249 217 -569 323 -854 284z m277 -507 c92 -33 195 -104 274 -189 62 -68 332 -464 539 -792 48 -77 107 -169 130 -205 54 -83 247 -386 295 -465 21 -33 97 -154 170 -270 73 -115 187 -297 254 -403 66 -105 133 -211 148 -235 44 -67 70 -119 64 -124 -3 -3 -65 0 -138 6 -547 48 -968 224 -1191 499 -30 37 -105 148 -167 247 -62 99 -218 347 -345 550 -256 409 -491 778 -608 957 -43 64 -80 123 -83 131 -3 9 27 48 79 103 182 191 386 258 579 190z m-1659 -2754 c145 -218 288 -435 318 -482 31 -47 83 -128 117 -181 34 -53 62 -101 62 -107 0 -6 -42 -24 -92 -41 -399 -130 -841 -153 -1252 -65 -117 26 -334 89 -348 103 -9 8 599 926 795 1199 l59 83 39 -56 c21 -30 157 -234 302 -453z"/></svg>';
@@ -575,7 +578,8 @@ $('#chapters').innerHTML = CONFIG.eras.map((e, i) => `
       ${e.line ? `<p class="line">&ldquo;${esc(e.line)}&rdquo;</p>` : ''}
       ${e.events && e.events.length ? `<ul>${e.events.map(ev => `<li><button type="button" data-album="${esc(ev.album)}">${esc(ev.title)}</button></li>`).join('')}</ul>` : ''}
     </div>
-    ${e.photo ? `<div class="ch-photo" style="background-image:url('${esc(e.photo)}')"></div>` : `<div class="ch-photo blank">${MARK}</div>`}
+    ${e.photo ? `<div class="ch-photo" style="background-image:url('${esc(e.photo)}');background-position:${esc(e.pos || 'center')};background-size:${esc(e.size || 'cover')}"></div>`
+              : `<div class="ch-photo blank${e.silhouette ? ' person' : ''}">${e.silhouette ? PERSON : MARK}</div>`}
   </article>`).join('');
 $('#chapters').addEventListener('click', e => {
   const b = e.target.closest('button[data-album]'); if (!b) return;
