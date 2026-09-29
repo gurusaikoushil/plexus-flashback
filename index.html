@@ -190,10 +190,10 @@ section{position:relative;padding:120px 48px}
         radial-gradient(ellipse at 20% 0%,#fffaf0 0,transparent 60%),
     radial-gradient(ellipse at 100% 100%,#d9cfbd 0,transparent 55%),
     var(--paper);
-  box-shadow:0 30px 60px -20px #000,0 2px 0 #fff6 inset;transform:rotate(var(--r,0deg));transition:transform .5s ease}
+  box-shadow:0 30px 60px -20px #000,0 2px 0 #fff6 inset;transform:rotate(var(--r,0deg));transition:transform .3s ease}
 .paper:nth-child(even){align-self:flex-end;margin-right:4%}
 .paper:nth-child(odd){align-self:flex-start;margin-left:4%}
-.paper.fade{transition:opacity 1s ease,transform .5s ease}
+.paper.fade{transition:opacity 1s ease,transform .3s ease}
 .paper.fade.in{transform:rotate(var(--r,0deg))}
 .paper.fade.in:hover,.paper.fade.in.open{transform:rotate(0)}
 /* paper grain */
@@ -206,19 +206,19 @@ section{position:relative;padding:120px 48px}
 .lh-date{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#2A241Dab;text-transform:uppercase}
 .paper .to{font-family:var(--hand);font-weight:600;font-size:30px;color:var(--ink-blue);margin:26px 0 12px}
 .paper .body p{font-family:var(--slab);font-weight:400;font-size:18.5px;line-height:1.72;margin:0 0 14px;color:#2A241D}
-.paper .body{position:relative;overflow:hidden;max-height:15.5em;transition:max-height .9s cubic-bezier(.65,0,.25,1)}
-.paper .body:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5.5em;pointer-events:none;background:linear-gradient(#e9e2d400,#e6dfd0 85%);opacity:1;transition:opacity .6s ease}
+.paper .body{position:relative;overflow:hidden;max-height:15.5em;transition:max-height .42s cubic-bezier(.2,.75,.25,1)}
+.paper .body:after{content:"";position:absolute;left:0;right:0;bottom:0;height:5.5em;pointer-events:none;background:linear-gradient(#e9e2d400,#e6dfd0 85%);opacity:1;transition:opacity .25s ease}
 .paper.open .body:after{opacity:0}
 .paper .more{transition:border-color .25s}
-.paper .more .arr{display:inline-block;transition:transform .5s ease}
+.paper .more .arr{display:inline-block;transition:transform .3s ease}
 .paper.open .more .arr{transform:rotate(180deg)}
 /* the sheet opens like folded paper: the lower panel swings out, creases flatten */
 .paper{transform-style:preserve-3d;perspective:1400px}
-.paper.unfolding{animation:unfold .9s cubic-bezier(.3,.7,.2,1)}
-.paper.folding{animation:refold .7s cubic-bezier(.5,0,.4,1)}
-@keyframes unfold{0%{transform:rotate(var(--r,0deg)) rotateX(14deg) scaleY(.96);box-shadow:0 12px 30px -12px #000}55%{transform:rotate(0) rotateX(-3deg) scaleY(1.01)}100%{transform:rotate(0) rotateX(0) scaleY(1)}}
-@keyframes refold{0%{transform:rotate(0) rotateX(0)}45%{transform:rotate(0) rotateX(10deg) scaleY(.97)}100%{transform:rotate(var(--r,0deg)) rotateX(0) scaleY(1)}}
-.paper .crease{position:absolute;left:0;right:0;height:14px;pointer-events:none;background:linear-gradient(#0000,#00000014 45%,#ffffff40 55%,#0000);transition:opacity .9s ease}
+.paper.unfolding{animation:unfold .46s cubic-bezier(.2,.8,.25,1)}
+.paper.folding{animation:refold .36s cubic-bezier(.5,0,.3,1)}
+@keyframes unfold{0%{transform:rotate(var(--r,0deg)) rotateX(7deg) translateY(-2px)}60%{transform:rotate(0) rotateX(-1.5deg) translateY(1px)}100%{transform:rotate(0) rotateX(0) translateY(0)}}
+@keyframes refold{0%{transform:rotate(0) rotateX(0)}50%{transform:rotate(0) rotateX(5deg)}100%{transform:rotate(var(--r,0deg)) rotateX(0)}}
+.paper .crease{position:absolute;left:0;right:0;height:14px;pointer-events:none;background:linear-gradient(#0000,#00000014 45%,#ffffff40 55%,#0000);transition:opacity .4s ease}
 .paper.open .crease{opacity:.35}
 .paper .crease.c1{top:33%}.paper .crease.c2{top:66%}
 .paper.short .body{max-height:none!important}
@@ -433,7 +433,7 @@ const CONFIG = {
   ],
   stats: [
     {n: 10, suffix: "+", label: "Events"},
-    {n: 100, suffix: "+", label: "Members"},
+    {n: 95, suffix: "+", label: "Members"},
     {n: 3, suffix: "", label: "Years since 2023"}
   ],
   heroPhotos: [
@@ -496,8 +496,8 @@ const CONFIG = {
       text:"As the founder of Plexus, I always believed that Plexus should be a place where anyone could come, express themselves and showcase their talent without any fear. Looking back, I’m really happy that we were able to make that happen. And seeing people now debate and fight for one position in Plexus honestly makes me smile — just like you guys fought with us when you were in your 3rd year 😂😂😂\n\nBut jokes apart, Plexus has shown us what a group of students can achieve with a little support from the management and, more importantly, the sleepless nights, hard work and sacrifices made by the students.\n\nWherever we go in life, Plexus has taught us to be responsible, diplomatic and empathetic towards others. It gave us memories, friendships and lessons that will stay with us far beyond college.\n\nFor us, Plexus was never just an organisation or a position. It was, and always will be, a family. ❤️"},
     {name:"N Parthiban", role:"President 2025–26 · 4C", year:"2025–26", to:"Dear Plexus,", photo:"img/parthiban_face.jpg", signoff:"", signature:"N Parthiban",
       text:"PLEXUS was never just a club I led; it became a chapter of my life I’ll carry long after college.\n\nAs President, I learned that leadership isn’t about the number of events you conduct, but the number of people you inspire to build what comes next.\n\nBetween ambitious ideas, impossible deadlines, and beautifully organised chaos, we built more than events—we built a culture.\n\nEvery mistake, late-night discussion, and small victory became part of PLEXUS’s story.\n\nTitles are temporary; what we leave behind isn’t.\n\nPLEXUS is a legacy built by many hands, and I’m proud to have added my chapter to it.\n\nMay the ideas grow bigger, the chaos stay legendary, and the legacy outlive every one of us.\n\nPlexus is not a place. Where Plexus people are, that’s where Plexus is."},
-    {name:"The seniors of Plexus", role:"2023 – 2026", year:"September 2026", to:"Hey Arvind,", photo:"", signoff:"", signature:"Your seniors",
-      text:"So it’s your turn now. Congrats, and also good luck, you’re going to need it 😄\n\nHonestly, none of us knew what we were doing when we started. We just kept showing up, figuring it out, fighting over small things and laughing about them later. Somehow Plexus came out of all that, and now it’s yours.\n\nA few things we learnt the hard way. Something will always go wrong an hour before the event. The mic, the projector, someone’s laptop. Don’t panic, your team will sort it out. They always do.\n\nDon’t try to do everything alone. We tried. It doesn’t work.\n\nLook out for the quiet ones. Some of them will end up running this club one day, so give them a chance before they feel they have to ask for one.\n\nAnd enjoy it. This year goes way faster than you think.\n\nProud of you. Make us prouder."}
+    {name:"Arvind Singh", role:"President · Present", year:"2026", to:"Dear Plexus,", photo:"", signoff:"", signature:"Arvind",
+      text:"I still can’t fully believe I’m the one writing this.\n\nMost of what I know about running an event, I learnt by watching our seniors. Watching them stay calm when everything was going wrong an hour before the start. Watching them trust people who were new and let them take on real work. That’s what made so many of us stay.\n\nHarsha and Benhin started Plexus. Parthiban made it bigger. Now it’s my turn, and honestly, those are big shoes to fill. I won’t pretend I have it all figured out. But I know what Plexus is supposed to feel like, because you showed us.\n\nTo the seniors who are leaving: thank you. For the late nights, the last-minute calls, and for leaving this club better than you found it. We’ll take care of it.\n\nTo everyone staying: let’s make this a year they come back to watch.\n\nPlexus is ours now. Let’s not mess it up 😄"}
   ],
 
   groupPhoto: "img/IMG_1695.jpg",                             // full-screen background for the credits, e.g. "img/group.jpg"
