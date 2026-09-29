@@ -265,8 +265,9 @@ footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .li
 .paper .body p{font-family:var(--slab);font-style:italic;font-weight:400;font-size:20px;line-height:1.6;margin:0 0 14px;color:var(--ink);display:block;-webkit-line-clamp:unset;overflow:visible}
 .paper .body p:before,.paper .body p:after{content:none}
 .paper .body{margin:18px 0 6px}
-.paper:not(.open) .body p:nth-child(n+3){display:none}
-.paper:not(.open) .body p:nth-child(2){-webkit-mask-image:linear-gradient(#000 30%,transparent);mask-image:linear-gradient(#000 30%,transparent);max-height:3.2em;overflow:hidden}
+.paper:not(.open) .body{max-height:14em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.paper.short .body{max-height:none;-webkit-mask-image:none;mask-image:none}
+.paper.short .more{display:none}
 .paper .signoff{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
 .cg.grid .names{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 26px;max-width:980px;margin:14px auto 0}
 .cg.grid .n{font-size:clamp(15px,1.7vw,19px);letter-spacing:.08em;line-height:1.7}
@@ -420,7 +421,7 @@ const CONFIG = {
       line:"For us, Plexus was never just an organisation or a position. It was, and always will be, a family.",
       photo:"img/harsha.jpg", pos:"50% 37%", size:"210%",
       events:[{title:"Full house in the seminar hall, September 2024",album:"Stage Events"},{title:"Lab session and team day, June 2025",album:"Lab Sessions"}]},
-    {years:"2025–26", role:"President", name:"Parthiban", line:"", photo:"img/parthiban.jpg", pos:"45% 27%", size:"125%",
+    {years:"2025–26", role:"President", name:"Parthiban", line:"Titles are temporary; what we leave behind isn’t.", photo:"img/parthiban.jpg", pos:"45% 27%", size:"125%",
       events:[{title:"Felicitation in the lab, August 2025",album:"Lab Sessions"},{title:"PLEXUS on stage, October 2025",album:"Stage Events"},{title:"February 2026 celebration",album:"Celebrations"}]},
     {years:"Present", role:"President", name:"Arvind Singh", line:"", photo:"", now:true, events:[]}
   ],
@@ -452,7 +453,9 @@ const CONFIG = {
 
   letters: [
     {name:"Harsha Aditya", role:"Founder · President 2024–25", year:"Since 2023", photo:"img/harsha_face.jpg", signoff:"Your Ex-President & Founder", signature:"Harsha",
-      text:"As the founder of Plexus, I always believed that Plexus should be a place where anyone could come, express themselves and showcase their talent without any fear. Looking back, I’m really happy that we were able to make that happen. And seeing people now debate and fight for one position in Plexus honestly makes me smile — just like you guys fought with us when you were in your 3rd year 😂😂😂\n\nBut jokes apart, Plexus has shown us what a group of students can achieve with a little support from the management and, more importantly, the sleepless nights, hard work and sacrifices made by the students.\n\nWherever we go in life, Plexus has taught us to be responsible, diplomatic and empathetic towards others. It gave us memories, friendships and lessons that will stay with us far beyond college.\n\nFor us, Plexus was never just an organisation or a position. It was, and always will be, a family. ❤️"}
+      text:"As the founder of Plexus, I always believed that Plexus should be a place where anyone could come, express themselves and showcase their talent without any fear. Looking back, I’m really happy that we were able to make that happen. And seeing people now debate and fight for one position in Plexus honestly makes me smile — just like you guys fought with us when you were in your 3rd year 😂😂😂\n\nBut jokes apart, Plexus has shown us what a group of students can achieve with a little support from the management and, more importantly, the sleepless nights, hard work and sacrifices made by the students.\n\nWherever we go in life, Plexus has taught us to be responsible, diplomatic and empathetic towards others. It gave us memories, friendships and lessons that will stay with us far beyond college.\n\nFor us, Plexus was never just an organisation or a position. It was, and always will be, a family. ❤️"},
+    {name:"N Parthiban", role:"President 2025–26 · 4C", year:"2025–26", photo:"img/parthiban_face.jpg", signoff:"", signature:"N Parthiban",
+      text:"PLEXUS was never just a club I led; it became a chapter of my life I’ll carry long after college.\n\nAs President, I learned that leadership isn’t about the number of events you conduct, but the number of people you inspire to build what comes next.\n\nBetween ambitious ideas, impossible deadlines, and beautifully organised chaos, we built more than events—we built a culture.\n\nEvery mistake, late-night discussion, and small victory became part of PLEXUS’s story.\n\nTitles are temporary; what we leave behind isn’t.\n\nPLEXUS is a legacy built by many hands, and I’m proud to have added my chapter to it.\n\nMay the ideas grow bigger, the chaos stay legendary, and the legacy outlive every one of us."}
   ],
 
   groupPhoto: "img/IMG_1695.jpg",                             // full-screen background for the credits, e.g. "img/group.jpg"
@@ -683,6 +686,7 @@ $('#desk').innerHTML = CONFIG.letters.map((l, i) => `
     <button class="more" type="button">Read more</button>
     ${l.signoff ? `<div class="signoff">${esc(l.signoff)}</div>` : ''}<div class="sig">${esc(l.signature || l.name)}</div>
   </article>`).join('');
+requestAnimationFrame(() => $$('#desk .paper').forEach(p => { const b = $('.body', p); if (b && b.scrollHeight <= b.clientHeight + 4) p.classList.add('short'); }));
 $('#desk').addEventListener('click', e => {
   const b = e.target.closest('.more'); if (!b) return;
   const card = b.closest('.paper'); card.classList.toggle('open');
