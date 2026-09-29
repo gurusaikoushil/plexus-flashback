@@ -255,6 +255,20 @@ footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .li
   #credits{height:auto;padding:100px 24px 120px}.roll{position:relative;inset:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
   .roll-in{position:static;transform:none!important;animation:none!important}.close{position:static;opacity:1;margin-top:20px}.replay{display:none}
 }
+
+/* content additions */
+.ch-photo.blank{display:flex;align-items:center;justify-content:center;background:#0c0c0c;color:#ffffff30}
+.ch-photo.blank svg{width:46%}
+.desk .paper:only-child{grid-column:1/-1;max-width:780px}
+.paper .body p{font-family:var(--slab);font-style:italic;font-weight:400;font-size:20px;line-height:1.6;margin:0 0 14px;color:var(--ink);display:block;-webkit-line-clamp:unset;overflow:visible}
+.paper .body p:before,.paper .body p:after{content:none}
+.paper .body{margin:18px 0 6px}
+.paper:not(.open) .body p:nth-child(n+3){display:none}
+.paper:not(.open) .body p:nth-child(2){-webkit-mask-image:linear-gradient(#000 30%,transparent);mask-image:linear-gradient(#000 30%,transparent);max-height:3.2em;overflow:hidden}
+.paper .signoff{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.cg.grid .names{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 26px;max-width:980px;margin:14px auto 0}
+.cg.grid .n{font-size:clamp(15px,1.7vw,19px);letter-spacing:.08em;line-height:1.7}
+@media (max-width:760px){.cg.grid .names{grid-template-columns:repeat(2,minmax(0,1fr))}.paper .body p{font-size:18px}}
 </style>
 </head>
 <body>
@@ -368,7 +382,7 @@ const CONFIG = {
   brand: "PLEXUS",
   logo: "",                                   // the Plexus mark is built into the page
   tagline: "United By Nerves",
-  intro: "Plexus is the branch club of MRCE where ideas become events and events become memories. Five sub-clubs, one family: learning, building, creating and celebrating together. This archive replays the journey, from the people who started it to the ones carrying it forward.",
+  intro: "Plexus is the branch club of MRCE, started in 2023, where ideas become events and events become memories. Five sub-clubs, one family: learning, building, creating and celebrating together. This archive replays the journey, from the people who started it to the ones carrying it forward.",
   subclubs: [
     {name:"Technical",        desc:"Innovation, hackathons and technical projects."},
     {name:"Non-Technical",    desc:"Event decor, logistics and everything that makes an event run."},
@@ -377,11 +391,13 @@ const CONFIG = {
     {name:"Design",           desc:"Visual branding, posters and promotional material."}
   ],
   stats: [
-    {n: 0, suffix: "+", label: "Events"},
-    {n: 0, suffix: "+", label: "Members"},
-    {n: 0, suffix: "",  label: "Years"}
+    {n: 10, suffix: "+", label: "Events"},
+    {n: 100, suffix: "+", label: "Members"},
+    {n: 3, suffix: "", label: "Years since 2023"}
   ],
   heroPhotos: [
+    "img/strip/WA_independence.jpg",
+    "img/strip/WA_trio.jpg",
     "img/strip/20251024_114722.jpg",
     "img/strip/IMG_6773.jpg",
     "img/strip/IMG_1695.jpg",
@@ -399,17 +415,17 @@ const CONFIG = {
 
   // Chapters: founder first, current president last
   eras: [
-    {years:"20XX",    role:"Founder",   name:"Founder Name",     line:"It started with an idea and a few friends.", photo:"video/20240920_121107.jpg",
-      events:[{title:"Seminar hall, 2024",album:"Stage Events"},{title:"Lab sessions",album:"Lab Sessions"}]},
-    {years:"20XX–XX", role:"President", name:"President Name",   line:"The year we learned to run events at scale.", photo:"img/IMG_1695.jpg",
-      events:[{title:"Lab session and team day, June 2025",album:"Lab Sessions"},{title:"Felicitation, August 2025",album:"Lab Sessions"}]},
-    {years:"20XX–XX", role:"President", name:"President Name",   line:"We made the club feel like a family.", photo:"img/20251024_114722.jpg",
-      events:[{title:"PLEXUS on stage, October 2025",album:"Stage Events"},{title:"Celebrations",album:"Celebrations"}]},
-    {years:"Present", role:"President", name:"Current President", line:"Now it is our turn to keep the story going.", photo:"img/IMG_6664.jpg", now:true,
-      events:[{title:"February 2026 celebration",album:"Celebrations"}]}
+    {years:"2023–24", role:"Founder · President", name:"Benhin", line:"", photo:"", events:[]},
+    {years:"2024–25", role:"Founder · President", name:"Harsha Aditya",
+      line:"For us, Plexus was never just an organisation or a position. It was, and always will be, a family.",
+      photo:"img/IMG_1695.jpg",
+      events:[{title:"Full house in the seminar hall, September 2024",album:"Stage Events"},{title:"Lab session and team day, June 2025",album:"Lab Sessions"}]},
+    {years:"2025–26", role:"President", name:"Parthiban", line:"", photo:"img/20251024_114722.jpg",
+      events:[{title:"Felicitation in the lab, August 2025",album:"Lab Sessions"},{title:"PLEXUS on stage, October 2025",album:"Stage Events"},{title:"February 2026 celebration",album:"Celebrations"}]},
+    {years:"Present", role:"President", name:"Arvind Singh", line:"", photo:"", now:true, events:[]}
   ],
 
-  albums: ["Stage Events","Lab Sessions","Celebrations"],
+  albums: ["Stage Events","Lab Sessions","Celebrations","Candids"],
 
   memories: [
     {type:"photo", src:"img/20251024_114722.jpg", album:"Stage Events", year:"2025", caption:"The PLEXUS stage lineup", people:[], shape:"wide"},
@@ -428,25 +444,22 @@ const CONFIG = {
     {type:"photo", src:"img/IMG_6743.jpg", album:"Lab Sessions", year:"2025", caption:"Felicitation in the lab", people:[], shape:""},
     {type:"video", src:"video/20251024_114752.mp4", poster:"video/20251024_114752.jpg", album:"Stage Events", year:"2025", caption:"Behind the stage", people:[], shape:"tall"},
     {type:"photo", src:"img/IMG_6689.jpg", album:"Celebrations", year:"2026", caption:"The decorated lab", people:[], shape:""},
+    {type:"video", src:"video/WA_0929.mp4", poster:"video/WA_0929.jpg", album:"Celebrations", year:"", caption:"Bringing the trophies home", people:[], shape:"wide"},
+    {type:"photo", src:"img/WA_independence.jpg", album:"Celebrations", year:"", caption:"Independence Day with our chief guest", people:[], shape:"wide"},
+    {type:"photo", src:"img/WA_trio.jpg", album:"Candids", year:"", caption:"Mid-conversation", people:[], shape:""},
     {type:"photo", src:"img/20251024_1148290.jpg", album:"Stage Events", year:"2025", caption:"T-shirt reveal, one more shot", people:[], shape:""}
   ],
 
   letters: [
-    {name:"Founder Name",   role:"Founder",   year:"20XX", photo:"", signature:"Founder Name",
-      text:"When we started Plexus we only had an idea and a few friends who believed in it. Seeing it grow into what it is today makes every late night worth it. To everyone carrying it forward: keep it warm, keep it curious, and keep it together."},
-    {name:"Past President", role:"President", year:"20XX", photo:"", signature:"Past President",
-      text:"Every event taught us something new. We made mistakes, we fixed them, and we laughed about them later. To the juniors: the club is only as strong as the people who show up, so keep showing up."},
-    {name:"Past President", role:"President", year:"20XX", photo:"", signature:"Past President",
-      text:"Plexus gave me friends, confidence and memories I will carry forever. Thank you for trusting us with your time and your ideas."}
+    {name:"Harsha Aditya", role:"Founder · President 2024–25", year:"Since 2023", photo:"", signoff:"Your Ex-President & Founder", signature:"Harsha",
+      text:"As the founder of Plexus, I always believed that Plexus should be a place where anyone could come, express themselves and showcase their talent without any fear. Looking back, I’m really happy that we were able to make that happen. And seeing people now debate and fight for one position in Plexus honestly makes me smile — just like you guys fought with us when you were in your 3rd year 😂😂😂\n\nBut jokes apart, Plexus has shown us what a group of students can achieve with a little support from the management and, more importantly, the sleepless nights, hard work and sacrifices made by the students.\n\nWherever we go in life, Plexus has taught us to be responsible, diplomatic and empathetic towards others. It gave us memories, friendships and lessons that will stay with us far beyond college.\n\nFor us, Plexus was never just an organisation or a position. It was, and always will be, a family. ❤️"}
   ],
 
   groupPhoto: "img/IMG_1695.jpg",                             // full-screen background for the credits, e.g. "img/group.jpg"
   credits: [
-    {title:"Founders",         names:["Founder Name"]},
-    {title:"Past Presidents",  names:["President Name","President Name"]},
-    {title:"Committees",       names:["Member Name","Member Name","Member Name"]},
-    {title:"Photography",      names:["Contributor Name"]},
-    {title:"Seniors",          names:["Senior Name","Senior Name","Senior Name","Senior Name"]}
+    {title:"Founders", names:["Harsha Aditya","Benhin"]},
+    {title:"Presidents", names:["Benhin · 2023–24","Harsha Aditya · 2024–25","Parthiban · 2025–26","Arvind Singh · Present"]},
+    {title:"Members since 2023", grid:true, names:["Aishi Jain", "Dileep", "Jahnavi", "Taaha", "M Vaishnavi", "Druvika", "Swasthik", "Lochani", "Guna Ranjan", "G. Ramya", "Siddappa", "Ramya", "Prasheel Varma", "Deepika", "Akshitha", "Nikhil", "Deekshitha", "Sowmya", "Hema", "Khyathi", "Pallavi", "Chandrakala", "Subhash", "Anmol", "Harsh", "Purushottam", "Sruthi", "Nidhi", "Kevin", "Matthew", "Rakshitha", "Arjun", "Yaswanth", "Bharat Chandra", "Sumanth", "Vamshi", "Vamsi", "Chareeth Kumar", "Venkatesh", "Karthikeyan", "Shrish", "Nitish", "Chandu", "Tarun", "Laxmi Nandan Reddy", "Roshan", "Koushil", "Rayan", "Vyshnavi", "Hymavathi", "Sangeetha", "Manoj", "Dharani", "Aishwarya", "Nandini", "Rishika", "Virat", "Lahari", "Triveni", "Srinidhi", "Abhinav", "Venu", "Rashmitha", "Sriram", "Vignesh", "Anil", "Rohini", "Abhiram", "Bhuvan", "Aatulya", "Harsha", "Abhishek", "Sameeksha", "Shikhara", "Sneha", "Vaishnavi", "Sriya", "Triya", "Bharath", "Harshitha", "Rehan", "Vaishnavi Reddy", "Vaishnavi", "Shanthi", "B. Ashika", "G. Asritha", "Sai Charan", "Venkata Mani Charan", "Charan", "Kusuma", "Vaishnavi", "Nandini", "Sahasra", "Sohail", "Srinivas"]}
   ],
   closing: "The story continues with every new nerve we connect."
 };
@@ -559,10 +572,10 @@ $('#chapters').innerHTML = CONFIG.eras.map((e, i) => `
       <div class="lab">${e.now ? 'CHAPTER ' + String(i+1).padStart(2,'0') + ' &mdash; PRESENT' : 'CHAPTER ' + String(i+1).padStart(2,'0') + ' &mdash; ' + esc(e.years)}</div>
       <div class="role">${esc(e.role)}</div>
       <h3>${esc(e.name)}</h3>
-      <p class="line">&ldquo;${esc(e.line)}&rdquo;</p>
-      <ul>${e.events.map(ev => `<li><button type="button" data-album="${esc(ev.album)}">${esc(ev.title)}</button></li>`).join('')}</ul>
+      ${e.line ? `<p class="line">&ldquo;${esc(e.line)}&rdquo;</p>` : ''}
+      ${e.events && e.events.length ? `<ul>${e.events.map(ev => `<li><button type="button" data-album="${esc(ev.album)}">${esc(ev.title)}</button></li>`).join('')}</ul>` : ''}
     </div>
-    <div class="ch-photo" style="background-image:${bg(e.photo, i+30)}"></div>
+    ${e.photo ? `<div class="ch-photo" style="background-image:url('${esc(e.photo)}')"></div>` : `<div class="ch-photo blank">${MARK}</div>`}
   </article>`).join('');
 $('#chapters').addEventListener('click', e => {
   const b = e.target.closest('button[data-album]'); if (!b) return;
@@ -662,9 +675,9 @@ $('#desk').innerHTML = CONFIG.letters.map((l, i) => `
   <article class="paper fade" style="--r:${tilt[i % tilt.length]}deg">
     <div class="from">A letter to Plexus</div><div class="yr">${esc(l.year)}</div>
     <div class="who">${l.photo ? `<div class="av" style="background-image:url('${esc(l.photo)}')"></div>` : ''}<div><h3>${esc(l.name)}</h3><div class="rl">${esc(l.role)}</div></div></div>
-    <p>${esc(l.text)}</p>
+    <div class="body">${String(l.text).split(/\n\s*\n/).map(t => `<p>${esc(t)}</p>`).join('')}</div>
     <button class="more" type="button">Read more</button>
-    <div class="sig">${esc(l.signature || l.name)}</div>
+    ${l.signoff ? `<div class="signoff">${esc(l.signoff)}</div>` : ''}<div class="sig">${esc(l.signature || l.name)}</div>
   </article>`).join('');
 $('#desk').addEventListener('click', e => {
   const b = e.target.closest('.more'); if (!b) return;
@@ -675,18 +688,19 @@ $('#desk').addEventListener('click', e => {
 /* ---------- credits ---------- */
 $('#cbg').style.backgroundImage = CONFIG.groupPhoto ? `url("${esc(CONFIG.groupPhoto)}")` : tone(5, 34, 16);
 $('#closing').textContent = CONFIG.closing;
-$('#rollIn').innerHTML = CONFIG.credits.map(g => `<div class="cg"><div class="mono">${esc(g.title)}</div>${g.names.map(n => `<div class="n">${esc(n)}</div>`).join('')}</div>`).join('') + `<div class="cg"><div class="roll-logo">${MARK}</div><div class="roll-word">PLEXUS</div><div class="roll-tag">UNITED BY NERVES</div></div><div style="height:40px"></div>`;
+$('#rollIn').innerHTML = CONFIG.credits.map(g => `<div class="cg${g.grid ? ' grid' : ''}"><div class="mono">${esc(g.title)}</div><div class="names">${g.names.map(n => `<div class="n">${esc(n)}</div>`).join('')}</div></div>`).join('') + `<div class="cg"><div class="roll-logo">${MARK}</div><div class="roll-word">PLEXUS</div><div class="roll-tag">UNITED BY NERVES</div></div><div style="height:40px"></div>`;
 const rollIn = $('#rollIn'), closing = $('#closing');
 let creditsPlayed = false;
+const CREDIT_SPEED = 120;   // pixels per second; raise to roll faster
 function playCredits(){
   if (reduce){ closing.classList.add('show'); return; }
   const h = $('#roll').clientHeight, dist = h + rollIn.scrollHeight;
   rollIn.style.setProperty('--dist', dist + 'px');
-  rollIn.style.setProperty('--dur', Math.max(20, dist / 45) + 's');
+  rollIn.style.setProperty('--dur', Math.max(14, dist / CREDIT_SPEED) + 's');
   closing.classList.remove('show');
   rollIn.classList.remove('go'); void rollIn.offsetWidth; rollIn.classList.add('go');
   clearTimeout(playCredits.t);
-  playCredits.t = setTimeout(() => closing.classList.add('show'), Math.max(20, dist / 45) * 1000 * .8);
+  playCredits.t = setTimeout(() => closing.classList.add('show'), Math.max(14, dist / CREDIT_SPEED) * 1000 * .85);
 }
 $('#replay').addEventListener('click', playCredits);
 new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting && !creditsPlayed){ creditsPlayed = true; playCredits(); } }), {threshold:.45}).observe($('#credits'));
