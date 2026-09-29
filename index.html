@@ -183,24 +183,57 @@ section{position:relative;padding:120px 48px}
 .lb-x:hover,.lb-nav:hover{opacity:1}
 .lb-x{top:14px;right:20px}.lb-nav.prev{left:10px;top:50%}.lb-nav.next{right:10px;top:50%}
 
-/* ---------- 5 letters: read like subtitles, no paper ---------- */
-.desk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:70px 70px;padding:10px 0}
-.paper{position:relative;padding:0 0 0 34px;border-left:1px solid #ffffff40}
-.paper:before{content:"";position:absolute;left:-6px;top:4px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px var(--bg),0 0 12px 3px #ffffff66}
-.paper .from{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--edge);text-transform:uppercase}
-.paper .yr{position:absolute;right:0;top:0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted)}
-.paper .who{display:flex;gap:14px;align-items:center;margin:12px 0 4px}
-.paper .av{width:48px;height:48px;border-radius:50%;background:#1a1a1a center/cover no-repeat;flex:none;filter:grayscale(.3)}
-.paper h3{font-family:var(--slab);font-weight:700;font-size:24px;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
-.paper .rl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
-.paper p{font-family:var(--slab);font-style:italic;font-weight:400;font-size:21px;line-height:1.55;margin:18px 0 12px;color:var(--ink);display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
-.paper p:before{content:"\201C"}.paper p:after{content:"\201D"}
-.paper.open p{-webkit-line-clamp:unset;display:block}
-.paper .more{background:none;border:0;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;border-bottom:1px solid #ffffff40;padding:2px 0}
-.paper .more:hover{color:var(--ink)}
-.paper .sig{font-family:var(--hand);font-weight:600;font-size:34px;line-height:1;color:var(--soft)}
-@media (max-width:900px){.desk{grid-template-columns:1fr;gap:56px}}
-
+/* ---------- 5 letters: real letters on paper, sealed with the Plexus mark ---------- */
+.desk{display:flex;flex-direction:column;align-items:center;gap:80px;padding:20px 0}
+.paper{--paper:#EEE7DA;--pink:#2A241D;--ink-blue:#1F2B4D;position:relative;width:min(100%,720px);padding:44px 56px 48px;color:var(--pink);
+  background:
+    linear-gradient(180deg,transparent 33%,#0000000d 33.2%,#ffffff26 33.6%,transparent 34.2%,transparent 66.4%,#0000000d 66.6%,#ffffff26 67%,transparent 67.6%),
+    radial-gradient(ellipse at 20% 0%,#fffaf0 0,transparent 60%),
+    radial-gradient(ellipse at 100% 100%,#d9cfbd 0,transparent 55%),
+    var(--paper);
+  box-shadow:0 30px 60px -20px #000,0 2px 0 #fff6 inset;transform:rotate(var(--r,0deg));transition:transform .5s ease}
+.paper:nth-child(even){align-self:flex-end;margin-right:4%}
+.paper:nth-child(odd){align-self:flex-start;margin-left:4%}
+.paper.fade{transition:opacity 1s ease,transform .5s ease}
+.paper.fade.in{transform:rotate(var(--r,0deg))}
+.paper.fade.in:hover,.paper.fade.in.open{transform:rotate(0)}
+/* paper grain */
+.paper:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .28  0 0 0 .35 0'/></filter><rect width='160' height='160' filter='url(%23p)'/></svg>")}
+.lh{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid #2A241D33}
+.lh-mark{width:34px;height:21px;color:var(--pink)}
+.lh-mark svg{width:100%;height:100%}
+.lh-word{font-family:var(--slab);font-weight:700;font-size:14px;letter-spacing:.24em}
+.lh-tag{font-family:var(--slab);font-size:10px;letter-spacing:.32em;color:#2A241D99;text-transform:uppercase}
+.lh-date{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#2A241Dab;text-transform:uppercase}
+.paper .to{font-family:var(--hand);font-weight:600;font-size:30px;color:var(--ink-blue);margin:26px 0 12px}
+.paper .body p{font-family:var(--slab);font-weight:400;font-size:18.5px;line-height:1.72;margin:0 0 14px;color:#2A241D}
+.paper:not(.open) .body{max-height:15.5em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 62%,transparent);mask-image:linear-gradient(#000 62%,transparent)}
+.paper.short .body{max-height:none;-webkit-mask-image:none;mask-image:none}
+.paper.short .more{display:none}
+.paper .more{display:inline-flex;align-items:center;gap:8px;margin:6px 0 4px;padding:6px 0;background:none;border:0;border-bottom:1px solid #2A241D66;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#2A241D}
+.paper .more:hover{border-color:#2A241D}
+.paper .closing{margin-top:22px}
+.paper .signoff{font-family:var(--slab);font-style:italic;font-size:17px;color:#2A241Dcc}
+.paper .sig{font-family:var(--hand);font-weight:600;font-size:46px;line-height:1.05;color:var(--ink-blue);margin-top:4px;transform:rotate(-2deg);transform-origin:left}
+.paper .who{display:flex;gap:12px;align-items:center;margin-top:14px}
+.paper .av{width:44px;height:44px;border-radius:50%;background:#bbb center/cover no-repeat;flex:none;filter:grayscale(.35) sepia(.2);box-shadow:0 0 0 3px #fff8}
+.paper h3{font-family:var(--slab);font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase;line-height:1.2}
+.paper .rl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:#2A241D99;text-transform:uppercase}
+/* wax seal with the Plexus mark */
+.seal{position:absolute;right:38px;bottom:34px;width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#ffffff38;
+  background:radial-gradient(circle at 35% 30%,#3a3a3a,#111 62%,#050505);box-shadow:0 0 0 5px #0b0b0b,0 0 0 7px #0000002b,0 10px 18px #0007;transform:rotate(-12deg)}
+.seal:before{content:"";position:absolute;inset:7px;border-radius:50%;border:1px dashed #ffffff22}
+.seal svg{width:58%;height:auto}
+@media (max-width:760px){
+  .desk{gap:56px}
+  .paper,.paper:nth-child(even),.paper:nth-child(odd){margin:0;align-self:stretch;padding:30px 22px 34px}
+  .paper .body p{font-size:16.5px}
+  .paper .to{font-size:26px}
+  .paper .sig{font-size:38px}
+  .seal{width:58px;height:58px;right:16px;bottom:20px}
+  .paper .who{padding-right:62px}
+  .lh-tag{display:none}
+}
 /* ---------- 6 credits ---------- */
 #credits{padding:0;height:100vh;min-height:640px;overflow:hidden;background:#000}
 .cbg{position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(1) contrast(1.1)}
@@ -261,17 +294,9 @@ footer .links a{color:var(--soft);border-bottom:1px solid transparent}footer .li
 .ch-photo.blank svg{width:46%}
 .ch-photo.person{background:#0c0c0c;align-items:flex-end}
 .ch-photo.person svg{width:100%;height:100%}
-.desk .paper:only-child{grid-column:1/-1;max-width:780px}
-.paper .body p{font-family:var(--slab);font-style:italic;font-weight:400;font-size:20px;line-height:1.6;margin:0 0 14px;color:var(--ink);display:block;-webkit-line-clamp:unset;overflow:visible}
-.paper .body p:before,.paper .body p:after{content:none}
-.paper .body{margin:18px 0 6px}
-.paper:not(.open) .body{max-height:14em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
-.paper.short .body{max-height:none;-webkit-mask-image:none;mask-image:none}
-.paper.short .more{display:none}
-.paper .signoff{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
 .cg.grid .names{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 26px;max-width:980px;margin:14px auto 0}
 .cg.grid .n{font-size:clamp(15px,1.7vw,19px);letter-spacing:.08em;line-height:1.7}
-@media (max-width:760px){.cg.grid .names{grid-template-columns:repeat(2,minmax(0,1fr))}.paper .body p{font-size:18px}}
+@media (max-width:760px){.cg.grid .names{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -452,10 +477,12 @@ const CONFIG = {
   ],
 
   letters: [
-    {name:"Harsha Aditya", role:"Founder · President 2024–25", year:"Since 2023", photo:"img/harsha_face.jpg", signoff:"Your Ex-President & Founder", signature:"Harsha",
+    {name:"Harsha Aditya", role:"Founder · President 2024–25", year:"Since 2023", to:"Dear Plexus,", photo:"img/harsha_face.jpg", signoff:"Your Ex-President & Founder,", signature:"Harsha",
       text:"As the founder of Plexus, I always believed that Plexus should be a place where anyone could come, express themselves and showcase their talent without any fear. Looking back, I’m really happy that we were able to make that happen. And seeing people now debate and fight for one position in Plexus honestly makes me smile — just like you guys fought with us when you were in your 3rd year 😂😂😂\n\nBut jokes apart, Plexus has shown us what a group of students can achieve with a little support from the management and, more importantly, the sleepless nights, hard work and sacrifices made by the students.\n\nWherever we go in life, Plexus has taught us to be responsible, diplomatic and empathetic towards others. It gave us memories, friendships and lessons that will stay with us far beyond college.\n\nFor us, Plexus was never just an organisation or a position. It was, and always will be, a family. ❤️"},
-    {name:"N Parthiban", role:"President 2025–26 · 4C", year:"2025–26", photo:"img/parthiban_face.jpg", signoff:"", signature:"N Parthiban",
-      text:"PLEXUS was never just a club I led; it became a chapter of my life I’ll carry long after college.\n\nAs President, I learned that leadership isn’t about the number of events you conduct, but the number of people you inspire to build what comes next.\n\nBetween ambitious ideas, impossible deadlines, and beautifully organised chaos, we built more than events—we built a culture.\n\nEvery mistake, late-night discussion, and small victory became part of PLEXUS’s story.\n\nTitles are temporary; what we leave behind isn’t.\n\nPLEXUS is a legacy built by many hands, and I’m proud to have added my chapter to it.\n\nMay the ideas grow bigger, the chaos stay legendary, and the legacy outlive every one of us.\n\nPlexus is not a place. Where Plexus people are, that’s where Plexus is."}
+    {name:"N Parthiban", role:"President 2025–26 · 4C", year:"2025–26", to:"Dear Plexus,", photo:"img/parthiban_face.jpg", signoff:"", signature:"N Parthiban",
+      text:"PLEXUS was never just a club I led; it became a chapter of my life I’ll carry long after college.\n\nAs President, I learned that leadership isn’t about the number of events you conduct, but the number of people you inspire to build what comes next.\n\nBetween ambitious ideas, impossible deadlines, and beautifully organised chaos, we built more than events—we built a culture.\n\nEvery mistake, late-night discussion, and small victory became part of PLEXUS’s story.\n\nTitles are temporary; what we leave behind isn’t.\n\nPLEXUS is a legacy built by many hands, and I’m proud to have added my chapter to it.\n\nMay the ideas grow bigger, the chaos stay legendary, and the legacy outlive every one of us.\n\nPlexus is not a place. Where Plexus people are, that’s where Plexus is."},
+    {name:"The seniors of Plexus", role:"To the President, 2026–27", year:"September 2026", to:"Dear Arvind,", photo:"", signoff:"With love and a little envy,", signature:"The Plexus family",
+      text:"The baton is yours now.\n\nPlexus started as an idea shared by a few friends in 2023. Three years later it is more than ten events, more than a hundred members, and more late nights than any of us can count. All of that now rests in your hands, and we couldn’t be happier about who is holding it.\n\nYou don’t have to run it the way we did. Keep what works, fix what didn’t, and always make room for the person standing at the edge of the room who hasn’t found their place yet. That is how Plexus grew in the first place.\n\nThere will be impossible deadlines and beautifully organised chaos. Lean on your team; every president before you did. When it gets heavy, remember that Plexus was never one person’s job. It was always all of us, and it still is.\n\nWe’ll be in the audience at every event, cheering the loudest."}
   ],
 
   groupPhoto: "img/IMG_1695.jpg",                             // full-screen background for the credits, e.g. "img/group.jpg"
@@ -677,20 +704,25 @@ document.addEventListener('keydown', e => {
 });
 
 /* ---------- letters ---------- */
-const tilt = [-1.6, 1.2, -0.8, 1.8, -1.2, 0.9];
+const tilt = [-1.2, 0.9, -0.6, 1.1];
 $('#desk').innerHTML = CONFIG.letters.map((l, i) => `
   <article class="paper fade" style="--r:${tilt[i % tilt.length]}deg">
-    <div class="from">A letter to Plexus</div><div class="yr">${esc(l.year)}</div>
-    <div class="who">${l.photo ? `<div class="av" style="background-image:url('${esc(l.photo)}')"></div>` : ''}<div><h3>${esc(l.name)}</h3><div class="rl">${esc(l.role)}</div></div></div>
+    <header class="lh"><span class="lh-mark">${MARK}</span><span><span class="lh-word">PLEXUS</span><br><span class="lh-tag">United by nerves</span></span><span class="lh-date">${esc(l.year)}</span></header>
+    <div class="to">${esc(l.to || 'Dear Plexus,')}</div>
     <div class="body">${String(l.text).split(/\n\s*\n/).map(t => `<p>${esc(t)}</p>`).join('')}</div>
-    <button class="more" type="button">Read more</button>
-    ${l.signoff ? `<div class="signoff">${esc(l.signoff)}</div>` : ''}<div class="sig">${esc(l.signature || l.name)}</div>
+    <button class="more" type="button">Unfold the letter &darr;</button>
+    <div class="closing">
+      ${l.signoff ? `<div class="signoff">${esc(l.signoff)}</div>` : ''}
+      <div class="sig">${esc(l.signature || l.name)}</div>
+      <div class="who">${l.photo ? `<div class="av" style="background-image:url('${esc(l.photo)}')"></div>` : ''}<div><h3>${esc(l.name)}</h3><div class="rl">${esc(l.role)}</div></div></div>
+    </div>
+    <div class="seal" aria-hidden="true">${MARK}</div>
   </article>`).join('');
 requestAnimationFrame(() => $$('#desk .paper').forEach(p => { const b = $('.body', p); if (b && b.scrollHeight <= b.clientHeight + 4) p.classList.add('short'); }));
 $('#desk').addEventListener('click', e => {
   const b = e.target.closest('.more'); if (!b) return;
   const card = b.closest('.paper'); card.classList.toggle('open');
-  b.textContent = card.classList.contains('open') ? 'Show less' : 'Read more';
+  b.innerHTML = card.classList.contains('open') ? 'Fold it back &uarr;' : 'Unfold the letter &darr;';
 });
 
 /* ---------- credits ---------- */
